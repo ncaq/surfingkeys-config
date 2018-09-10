@@ -1,0 +1,15 @@
+{
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "prefer-destructuring": [
+      "error",
+      {
+        "array": false,
+        "object": true
+      }
+    ]
+  },
+  "extends": ["airbnb", "plugin:prettier/recommended"]
+}
