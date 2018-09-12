@@ -38,11 +38,11 @@ function scrollInSmooth(size, step) {
 }
 
 mapkey("o", "Scroll down of half", () => {
-  scrollInSmooth(window.innerHeight / 2, 10);
+  scrollInSmooth(window.innerHeight / 2, 16);
 });
 
 mapkey("u", "Scroll up of half", () => {
-  scrollInSmooth(window.innerHeight / 2, -10);
+  scrollInSmooth(window.innerHeight / 2, -16);
 });
 
 map(",", "gg");
@@ -62,10 +62,10 @@ mapkey("n", "Scroll down of line", () => {
 });
 
 mapkey("v", "Scroll down of page", () => {
-  scrollInSmooth(window.innerHeight * 0.9, 10);
+  scrollInSmooth(window.innerHeight * 0.9, 20);
 });
 mapkey("z", "Scroll up of page", () => {
-  scrollInSmooth(window.innerHeight * 0.9, -10);
+  scrollInSmooth(window.innerHeight * 0.9, -20);
 });
 
 // tab
