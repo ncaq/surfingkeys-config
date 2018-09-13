@@ -110,7 +110,7 @@ mapkey("c", "#1Open a link in non-active new tab or click", () => {
         element.click();
       }
     },
-    {}
+    { tabbed: true, active: false }
   );
 });
 
