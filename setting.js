@@ -84,6 +84,37 @@ mapkey("q", "#3Close current tab", () => {
   RUNTIME("closeTab");
 });
 
+const tstId = "treestyletab@piro.sakura.ne.jp";
+
+// 親のタブに移る
+mapkey("b", "focus parent tab", async () => {
+  const { id } = await browser.runtime.sendMessage(tstId, {
+    type: "get-tree",
+    tab: "current"
+  });
+  const tabs = await browser.runtime.sendMessage(tstId, {
+    type: "get-tree",
+    tabs: "*"
+  });
+  const parentTab = tabs.find(tab =>
+    tab.children.find(child => child.id === id)
+  );
+  if (parentTab) {
+    browser.runtime.sendMessage(tstId, {
+      type: "focus",
+      tab: parentTab.id
+    });
+  }
+});
+
+// タブを1段階上昇させる
+mapkey("d", "outdent parent tab", () => {
+  browser.runtime.sendMessage(tstId, {
+    type: "outdent",
+    tab: "current"
+  });
+});
+
 // link
 
 map("g", "f");
