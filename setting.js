@@ -14,6 +14,7 @@
    RUNTIME
    event
    isEditable
+   iunmap
    map
    mapkey
    searchSelectedWith
@@ -175,3 +176,6 @@ mapkey("l", "Copy title and link to human readable without query", () => {
     `[${document.title}]: ${window.location.origin}${window.location.pathname}`
   );
 });
+
+// 絵文字
+iunmap(":");
