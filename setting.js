@@ -76,7 +76,6 @@ map("a", "E");
 map("s", "R");
 map("e", "R");
 
-map("<Alt-o>", "X");
 map("-", "X");
 mapkey("w", "#3Close current tab", () => {
   RUNTIME("closeTab");
