@@ -25,6 +25,7 @@
 
 Hints.characters = "htnsdcrbmwvz";
 settings.hintAlign = "left";
+settings.omnibarMaxResults = 50;
 
 // scroll
 
@@ -83,6 +84,12 @@ mapkey("w", "#3Close current tab", () => {
 mapkey("q", "#3Close current tab", () => {
   RUNTIME("closeTab");
 });
+
+mapkey("p", "#8Open history", () => {
+  Front.openOmnibar({ type: "History" });
+});
+
+// Tree Style Tabs
 
 const tstId = "treestyletab@piro.sakura.ne.jp";
 
