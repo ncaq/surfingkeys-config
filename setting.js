@@ -53,12 +53,6 @@ map(".", "G");
 mapkey("t", "Scroll up of line", () => {
   scrollInSmooth(window.innerHeight / 10, -4);
 });
-mapkey("k", "Scroll up of line", () => {
-  scrollInSmooth(window.innerHeight / 10, -4);
-});
-mapkey("j", "Scroll down of line", () => {
-  scrollInSmooth(window.innerHeight / 10, 4);
-});
 mapkey("n", "Scroll down of line", () => {
   scrollInSmooth(window.innerHeight / 10, 4);
 });
