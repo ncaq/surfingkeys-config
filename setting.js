@@ -25,7 +25,7 @@
 
 Hints.characters = "htnsdcrbmwvz";
 settings.hintAlign = "left";
-settings.omnibarMaxResults = 50;
+settings.omnibarMaxResults = 20;
 
 // scroll
 
