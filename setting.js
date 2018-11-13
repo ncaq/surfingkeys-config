@@ -210,3 +210,11 @@ mapkey("l", "Copy title and link to human readable without query", () => {
 
 // 絵文字
 iunmap(":");
+
+// zoom
+
+mapkey("<Ctrl-=>", "#3zoom reset", () => {
+  RUNTIME("setZoom", {
+    zoomFactor: 0
+  });
+});
