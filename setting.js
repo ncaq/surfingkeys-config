@@ -196,16 +196,16 @@ mapkey("<Ctrl-,>", "hatena bookmark", () => {
 
 // copy
 
-mapkey("m", "Copy title and link to markdown without query", () => {
-  Clipboard.write(
-    `[${document.title}](${window.location.origin}${window.location.pathname})`
-  );
+mapkey("m", "Copy title and link to markdown without hash", () => {
+  const url = new URL(window.location.href);
+  url.hash = "";
+  Clipboard.write(`[${document.title}](${url.href})`);
 });
 
-mapkey("l", "Copy title and link to human readable without query", () => {
-  Clipboard.write(
-    `[${document.title}]: ${window.location.origin}${window.location.pathname}`
-  );
+mapkey("l", "Copy title and link to human readable without hash", () => {
+  const url = new URL(window.location.href);
+  url.hash = "";
+  Clipboard.write(`[${document.title}]: ${url.href}`);
 });
 
 // 絵文字
