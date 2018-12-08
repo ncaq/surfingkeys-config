@@ -168,9 +168,16 @@ mapkey("<Ctrl-'>", "eowf", () => {
 });
 
 mapkey("<Alt-'>", "google translate", () => {
-  tabOpenLink(
-    `http://translate.google.com/translate?u=${window.location.href}`
-  );
+  const selection = window.getSelection().toString();
+  if (selection === "") {
+    // 文字列選択してない場合はページ自体を翻訳にかける
+    tabOpenLink(
+      `http://translate.google.com/translate?u=${window.location.href}`
+    );
+  } else {
+    // 選択している場合はそれを翻訳する
+    tabOpenLink(`https://translate.google.com/?text=${selection}`);
+  }
 });
 
 mapkey("<Ctrl-,>", "hatena bookmark", () => {
