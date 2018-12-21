@@ -176,7 +176,7 @@ mapkey("<Alt-'>", "google translate", () => {
     );
   } else {
     // 選択している場合はそれを翻訳する
-    tabOpenLink(`https://translate.google.com/?text=${selection}`);
+    tabOpenLink(`https://translate.google.com/?text=${encodeURI(selection)}`);
   }
 });
 
