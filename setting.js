@@ -24,6 +24,7 @@
  */
 
 Hints.characters = "htnsdcrbmwvz";
+Hints.charactersUpper = false;
 settings.hintAlign = "left";
 settings.omnibarMaxResults = 20;
 
