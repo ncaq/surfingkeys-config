@@ -30,39 +30,43 @@ settings.omnibarMaxResults = 20;
 
 // scroll
 
-function scrollInSmooth(size, step) {
-  function scroll(already) {
-    window.scrollBy(0, step);
-    if (Math.abs(already) < size) {
-      window.setTimeout(() => scroll(already + step), 1);
-    }
-  }
-  scroll(0);
+/**
+   scrollByの動作がFirefox 65で予測不可能になったのでscrollToで再実装する
+   スムーズスクロールする
+   @param {number} size - スクロールするサイズ
+   @param {number} ward - 1か-1でスクロールする方向を制御
+*/
+function scrollBySmooth(size, ward) {
+  window.scrollTo({
+    top: window.scrollY + ward * size,
+    left: 0,
+    behavior: "smooth"
+  });
 }
 
 mapkey("o", "Scroll down of half", () => {
-  scrollInSmooth(window.innerHeight / 2, 16);
+  scrollBySmooth(window.innerHeight / 2, 1);
 });
 
 mapkey("u", "Scroll up of half", () => {
-  scrollInSmooth(window.innerHeight / 2, -16);
+  scrollBySmooth(window.innerHeight / 2, -1);
 });
 
 map(",", "gg");
 map(".", "G");
 
 mapkey("t", "Scroll up of line", () => {
-  scrollInSmooth(window.innerHeight / 10, -4);
+  scrollBySmooth(window.innerHeight / 10, -1);
 });
 mapkey("n", "Scroll down of line", () => {
-  scrollInSmooth(window.innerHeight / 10, 4);
+  scrollBySmooth(window.innerHeight / 10, 1);
 });
 
 mapkey("v", "Scroll down of page", () => {
-  scrollInSmooth(window.innerHeight * 0.9, 20);
+  scrollBySmooth(window.innerHeight * 0.9, 1);
 });
 mapkey("z", "Scroll up of page", () => {
-  scrollInSmooth(window.innerHeight * 0.9, -20);
+  scrollBySmooth(window.innerHeight * 0.9, -1);
 });
 
 // tab
