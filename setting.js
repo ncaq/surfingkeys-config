@@ -35,7 +35,7 @@ settings.omnibarMaxResults = 20;
    スムーズスクロールする
    @param {number} size - スクロールするサイズ
    @param {number} ward - 1か-1でスクロールする方向を制御
-*/
+ */
 function scrollBySmooth(size, ward) {
   window.scrollTo({
     top: window.scrollY + ward * size,
@@ -44,21 +44,43 @@ function scrollBySmooth(size, ward) {
   });
 }
 
+/**
+   絶対位置スクロール
+   @param {number} position - スクロールする位置
+ */
+function scrollToSmooth(position) {
+  window.scrollTo({
+    top: position,
+    left: 0,
+    behavior: "smooth"
+  });
+}
+
 mapkey("o", "Scroll down of half", () => {
   scrollBySmooth(window.innerHeight / 2, 1);
 });
-
 mapkey("u", "Scroll up of half", () => {
   scrollBySmooth(window.innerHeight / 2, -1);
 });
 
-map(",", "gg");
-map(".", "G");
+mapkey(",", "Scroll to beginning", () => {
+  scrollToSmooth(0);
+});
+mapkey(".", "Scroll to end", () => {
+  scrollToSmooth(window.innerHeight);
+});
 
 mapkey("t", "Scroll up of line", () => {
   scrollBySmooth(window.innerHeight / 10, -1);
 });
 mapkey("n", "Scroll down of line", () => {
+  scrollBySmooth(window.innerHeight / 10, 1);
+});
+
+mapkey("k", "Scroll up of line", () => {
+  scrollBySmooth(window.innerHeight / 10, -1);
+});
+mapkey("j", "Scroll down of line", () => {
   scrollBySmooth(window.innerHeight / 10, 1);
 });
 
