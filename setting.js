@@ -212,13 +212,16 @@ mapkey("<Ctrl-,>", "hatena bookmark", () => {
   switch (location.protocol) {
     case "http:": {
       tabOpenLink(
-        `http://b.hatena.ne.jp/entry/${location.href.replace("http://", "")}`
+        `https://b.hatena.ne.jp/entry/${location.href.replace("http://", "")}`
       );
       break;
     }
     case "https:": {
       tabOpenLink(
-        `http://b.hatena.ne.jp/entry/s/${location.href.replace("https://", "")}`
+        `https://b.hatena.ne.jp/entry/s/${location.href.replace(
+          "https://",
+          ""
+        )}`
       );
       break;
     }
