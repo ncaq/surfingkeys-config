@@ -12,7 +12,6 @@
    Insert
    Normal
    RUNTIME
-   event
    isEditable
    iunmap
    map
