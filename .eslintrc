@@ -3,7 +3,12 @@
     "browser": true,
     "webextensions": true
   },
-  "extends": ["airbnb", "prettier", "plugin:prettier/recommended"],
+  "extends": [
+    "airbnb-base",
+    "plugin:prettier/recommended",
+    "prettier",
+    "prettier/@typescript-eslint"
+  ],
   "plugins": ["mysticatea"],
   "rules": {
     "mysticatea/no-instanceof-array": "error",
