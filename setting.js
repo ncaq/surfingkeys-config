@@ -240,10 +240,18 @@ mapkey("m", "Copy title and link to markdown without hash", () => {
   Clipboard.write(`[${document.title}](${url.href})`);
 });
 
+mapkey("M", "Copy title and link to markdown", () => {
+  Clipboard.write(`[${document.title}](${window.location.href})`);
+});
+
 mapkey("l", "Copy title and link to human readable without hash", () => {
   const url = new URL(window.location.href);
   url.hash = "";
   Clipboard.write(`[${document.title}]: ${url.href}`);
+});
+
+mapkey("L", "Copy title and link to human readable", () => {
+  Clipboard.write(`[${document.title}]: ${window.location.href}`);
 });
 
 // 絵文字
