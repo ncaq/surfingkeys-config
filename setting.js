@@ -201,7 +201,9 @@ mapkey("<Alt-'>", "google translate", () => {
   } else {
     // 選択している場合はそれを翻訳する
     tabOpenLink(
-      `https://translate.google.com/?sl=auto&tl=ja&text=${encodeURI(selection)}`
+      `https://translate.google.com/?sl=auto&tl=ja&text=${encodeURIComponent(
+        selection
+      )}`
     );
   }
 });
