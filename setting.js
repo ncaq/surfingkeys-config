@@ -28,6 +28,8 @@ Hints.charactersUpper = false;
 settings.hintAlign = "left";
 settings.omnibarMaxResults = 20;
 settings.blacklistPattern = /tt-rss.ncaq.net/;
+settings.tabsMRUOrder = false;
+settings.historyMUOrder = false;
 
 // scroll
 
