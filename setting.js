@@ -24,8 +24,10 @@
 
 Hints.characters = "htnsdcrbmwvz";
 Hints.charactersUpper = false;
+
 settings.hintAlign = "left";
 settings.omnibarMaxResults = 20;
+settings.blacklistPattern = /tt-rss.ncaq.net/;
 
 // scroll
 
