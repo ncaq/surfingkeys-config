@@ -43,7 +43,7 @@ function scrollBySmooth(size, ward) {
   window.scrollTo({
     top: window.scrollY + ward * size,
     left: 0,
-    behavior: "smooth"
+    behavior: "smooth",
   });
 }
 
@@ -55,7 +55,7 @@ function scrollToSmooth(position) {
   window.scrollTo({
     top: position,
     left: 0,
-    behavior: "smooth"
+    behavior: "smooth",
   });
 }
 
@@ -119,19 +119,19 @@ const tstId = "treestyletab@piro.sakura.ne.jp";
 mapkey("b", "focus parent tab", async () => {
   const { id } = await browser.runtime.sendMessage(tstId, {
     type: "get-tree",
-    tab: "current"
+    tab: "current",
   });
   const tabs = await browser.runtime.sendMessage(tstId, {
     type: "get-tree",
-    tabs: "*"
+    tabs: "*",
   });
-  const parentTab = tabs.find(tab =>
-    tab.children.find(child => child.id === id)
+  const parentTab = tabs.find((tab) =>
+    tab.children.find((child) => child.id === id)
   );
   if (parentTab) {
     browser.runtime.sendMessage(tstId, {
       type: "focus",
-      tab: parentTab.id
+      tab: parentTab.id,
     });
   }
 });
@@ -140,7 +140,7 @@ mapkey("b", "focus parent tab", async () => {
 mapkey("d", "outdent parent tab", () => {
   browser.runtime.sendMessage(tstId, {
     type: "outdent",
-    tab: "current"
+    tab: "current",
   });
 });
 
@@ -151,7 +151,7 @@ map("g", "f");
 mapkey("c", "#1Open a link in non-active new tab or click", () => {
   Hints.create(
     "",
-    element => {
+    (element) => {
       Hints.flashPressedLink(element);
       if (isEditable(element)) {
         Hints.exit();
@@ -162,9 +162,9 @@ mapkey("c", "#1Open a link in non-active new tab or click", () => {
         RUNTIME("openLink", {
           tab: {
             tabbed: true,
-            active: false
+            active: false,
           },
-          url: element.href
+          url: element.href,
         });
       } else {
         element.click();
@@ -265,6 +265,6 @@ iunmap(":");
 
 mapkey("<Ctrl-=>", "#3zoom reset", () => {
   RUNTIME("setZoom", {
-    zoomFactor: 0
+    zoomFactor: 0,
   });
 });
