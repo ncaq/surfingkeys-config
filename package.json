@@ -8,6 +8,6 @@
     "eslint-plugin-mysticatea": "^4.2.4",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.3",
-    "prettier": "^2.0.1"
+    "prettier": "^2.0.2"
   }
 }
