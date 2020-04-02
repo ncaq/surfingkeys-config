@@ -69,7 +69,9 @@ mapkey("u", "Scroll up of half", () => {
 mapkey(",", "Scroll to beginning", () => {
   scrollToSmooth(0);
 });
-map(".", "G");
+mapkey(".", "Scroll to ending", () => {
+  scrollToSmooth(document.body.clientHeight);
+});
 
 mapkey("t", "Scroll up of line", () => {
   scrollBySmooth(window.innerHeight / 10, -1);
