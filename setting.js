@@ -188,16 +188,16 @@ map("S", "D");
 // open with external service
 
 unmap("'");
-mapkey("'", "google", () => {
+mapkey("'", "Google", () => {
   searchSelectedWith("https://www.google.com/search?q=", false, false, "");
 });
 
 unmap("<Ctrl-'>");
-mapkey("<Ctrl-'>", "eowf", () => {
+mapkey("<Ctrl-'>", "英辞郎 on the WEB Pro Lite", () => {
   searchSelectedWith("https://eowf.alc.co.jp/search?q=", false, false, "");
 });
 
-mapkey("<Alt-'>", "google translate", () => {
+mapkey("<Alt-'>", "Google 翻訳", () => {
   const selection = window.getSelection().toString();
   if (selection === "") {
     // 文字列選択してない場合はページ自体を翻訳にかける
@@ -214,7 +214,16 @@ mapkey("<Alt-'>", "google translate", () => {
   }
 });
 
-mapkey("<Ctrl-,>", "hatena bookmark", () => {
+mapkey("<Ctrl-Alt-'>", "DeepL", () => {
+  const selection = window.getSelection().toString();
+  if (selection !== "") {
+    tabOpenLink(
+      `https://www.deepl.com/translator#en/ja/${encodeURIComponent(selection)}`
+    );
+  }
+});
+
+mapkey("<Ctrl-,>", "はてなブックマーク", () => {
   const { location } = window;
   switch (location.protocol) {
     case "http:": {
