@@ -59,37 +59,47 @@ function scrollToSmooth(position) {
   });
 }
 
+unmap("o");
 mapkey("o", "Scroll down of half", () => {
   scrollBySmooth(window.innerHeight / 2, 1);
 });
+unmap("u");
 mapkey("u", "Scroll up of half", () => {
   scrollBySmooth(window.innerHeight / 2, -1);
 });
 
+unmap(",");
 mapkey(",", "Scroll to beginning", () => {
   scrollToSmooth(0);
 });
+unmap(".");
 mapkey(".", "Scroll to ending", () => {
   scrollToSmooth(document.body.clientHeight);
 });
 
+unmap("t");
 mapkey("t", "Scroll up of line", () => {
   scrollBySmooth(window.innerHeight / 10, -1);
 });
+unmap("n");
 mapkey("n", "Scroll down of line", () => {
   scrollBySmooth(window.innerHeight / 10, 1);
 });
 
+unmap("k");
 mapkey("k", "Scroll up of line", () => {
   scrollBySmooth(window.innerHeight / 10, -1);
 });
+unmap("j");
 mapkey("j", "Scroll down of line", () => {
   scrollBySmooth(window.innerHeight / 10, 1);
 });
 
+unmap("v");
 mapkey("v", "Scroll down of page", () => {
   scrollBySmooth(window.innerHeight * 0.9, 1);
 });
+unmap("z");
 mapkey("z", "Scroll up of page", () => {
   scrollBySmooth(window.innerHeight * 0.9, -1);
 });
@@ -102,13 +112,16 @@ map("s", "R");
 map("e", "R");
 
 map("-", "X");
+unmap("w");
 mapkey("w", "#3Close current tab", () => {
   RUNTIME("closeTab");
 });
+unmap("q");
 mapkey("q", "#3Close current tab", () => {
   RUNTIME("closeTab");
 });
 
+unmap("p");
 mapkey("p", "#8Open history", () => {
   Front.openOmnibar({ type: "History" });
 });
@@ -118,6 +131,7 @@ mapkey("p", "#8Open history", () => {
 const tstId = "treestyletab@piro.sakura.ne.jp";
 
 // 親のタブに移る
+unmap("b");
 mapkey("b", "focus parent tab", async () => {
   const { id } = await browser.runtime.sendMessage(tstId, {
     type: "get-tree",
@@ -139,6 +153,7 @@ mapkey("b", "focus parent tab", async () => {
 });
 
 // タブを1段階上昇させる
+unmap("d");
 mapkey("d", "outdent parent tab", () => {
   browser.runtime.sendMessage(tstId, {
     type: "outdent",
@@ -150,6 +165,7 @@ mapkey("d", "outdent parent tab", () => {
 
 map("g", "f");
 
+unmap("c");
 mapkey("c", "#1Open a link in non-active new tab or click", () => {
   Hints.create(
     "",
@@ -176,6 +192,7 @@ mapkey("c", "#1Open a link in non-active new tab or click", () => {
   );
 });
 
+unmap("x");
 mapkey("x", "#3Choose a tab", () => {
   Front.chooseTab();
 });
@@ -249,22 +266,26 @@ mapkey("<Ctrl-,>", "はてなブックマーク", () => {
 
 // copy
 
+unmap("m");
 mapkey("m", "Copy title and link to markdown without hash", () => {
   const url = new URL(window.location.href);
   url.hash = "";
   Clipboard.write(`[${document.title}](${url.href})`);
 });
 
+unmap("M");
 mapkey("M", "Copy title and link to markdown", () => {
   Clipboard.write(`[${document.title}](${window.location.href})`);
 });
 
+unmap("l");
 mapkey("l", "Copy title and link to human readable without hash", () => {
   const url = new URL(window.location.href);
   url.hash = "";
   Clipboard.write(`[${document.title}]: ${url.href}`);
 });
 
+unmap("L");
 mapkey("L", "Copy title and link to human readable", () => {
   Clipboard.write(`[${document.title}]: ${window.location.href}`);
 });
