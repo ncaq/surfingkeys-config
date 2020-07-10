@@ -74,7 +74,7 @@ mapkey(",", "Scroll to beginning", () => {
 });
 unmap(".");
 mapkey(".", "Scroll to ending", () => {
-  scrollToSmooth(document.body.clientHeight);
+  scrollToSmooth(document.body.scrollHeight);
 });
 
 unmap("t");
