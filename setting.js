@@ -240,7 +240,7 @@ mapkey("<Ctrl-Alt-'>", "DeepL", () => {
   }
 });
 
-mapkey("<Ctrl-,>", "はてなブックマーク", () => {
+mapkey("<Ctrl-;>", "はてなブックマーク", () => {
   const { location } = window;
   switch (location.protocol) {
     case "http:": {
