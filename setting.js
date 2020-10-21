@@ -210,8 +210,13 @@ mapkey("'", "Google", () => {
 });
 
 unmap("<Ctrl-'>");
-mapkey("<Ctrl-'>", "英辞郎 on the WEB Pro Lite", () => {
-  searchSelectedWith("https://eowf.alc.co.jp/search?q=", false, false, "");
+mapkey("<Ctrl-'>", "DeepL", () => {
+  const selection = window.getSelection().toString();
+  if (selection !== "") {
+    tabOpenLink(
+      `https://www.deepl.com/translator#en/ja/${encodeURIComponent(selection)}`
+    );
+  }
 });
 
 mapkey("<Alt-'>", "Google 翻訳", () => {
@@ -231,13 +236,8 @@ mapkey("<Alt-'>", "Google 翻訳", () => {
   }
 });
 
-mapkey("<Ctrl-Alt-'>", "DeepL", () => {
-  const selection = window.getSelection().toString();
-  if (selection !== "") {
-    tabOpenLink(
-      `https://www.deepl.com/translator#en/ja/${encodeURIComponent(selection)}`
-    );
-  }
+mapkey("<Ctrl-Alt-'>", "英辞郎 on the WEB Pro Lite", () => {
+  searchSelectedWith("https://eowf.alc.co.jp/search?q=", false, false, "");
 });
 
 mapkey("<Ctrl-;>", "はてなブックマーク", () => {
