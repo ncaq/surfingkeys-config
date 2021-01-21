@@ -224,7 +224,7 @@ mapkey("<Alt-'>", "Google 翻訳", () => {
   if (selection === "") {
     // 文字列選択してない場合はページ自体を翻訳にかける
     tabOpenLink(
-      `http://translate.google.com/translate?hl=&sl=auto&tl=ja&u=${window.location.href}&sandbox=1`
+      `https://translate.google.com/translate?hl=&sl=auto&tl=ja&u=${window.location.href}&sandbox=1`
     );
   } else {
     // 選択している場合はそれを翻訳する
