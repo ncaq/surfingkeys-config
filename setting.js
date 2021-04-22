@@ -22,7 +22,11 @@
    unmap
  */
 
-Hints.characters = "htnsdcrbmwvzaoeui;qjkx";
+const hintsCharactersAll = "htnsdcrbmwvzaoeui;qjkx";
+const hintsCharactersRight = "htnsdcrbmwvz";
+const hintsCharactersLeft = "aoeui;qjkx";
+
+Hints.characters = hintsCharactersAll;
 Hints.charactersUpper = false;
 
 settings.hintAlign = "left";
@@ -121,11 +125,6 @@ mapkey("q", "#3Close current tab", () => {
   RUNTIME("closeTab");
 });
 
-unmap("p");
-mapkey("p", "#8Open history", () => {
-  Front.openOmnibar({ type: "History" });
-});
-
 // Tree Style Tabs
 
 const tstId = "treestyletab@piro.sakura.ne.jp";
@@ -163,33 +162,28 @@ mapkey("d", "outdent parent tab", () => {
 
 // link
 
-map("g", "f");
+unmap("g");
+mapkey("g", "#1Open a link", () => {
+  Hints.characters = hintsCharactersAll;
+  Hints.create("", Hints.dispatchMouseClick);
+});
 
 unmap("c");
 mapkey("c", "#1Open a link in non-active new tab or click", () => {
-  Hints.create(
-    "",
-    (element) => {
-      Hints.flashPressedLink(element);
-      if (isEditable(element)) {
-        Hints.exit();
-        Normal.passFocus(true);
-        element.focus();
-        Insert.enter(element);
-      } else if (element.href) {
-        RUNTIME("openLink", {
-          tab: {
-            tabbed: true,
-            active: false,
-          },
-          url: element.href,
-        });
-      } else {
-        element.click();
-      }
-    },
-    { tabbed: true, active: false }
-  );
+  Hints.characters = hintsCharactersAll;
+  Hints.create("", Hints.dispatchMouseClick, { tabbed: true, active: false });
+});
+
+unmap("f");
+mapkey("f", "#1Open a link in non-active new tab or click by right key", () => {
+  Hints.characters = hintsCharactersRight;
+  Hints.create("", Hints.dispatchMouseClick, { tabbed: true, active: false });
+});
+
+unmap("p");
+mapkey("p", "#1Open a link in non-active new tab or click by left key", () => {
+  Hints.characters = hintsCharactersLeft;
+  Hints.create("", Hints.dispatchMouseClick, { tabbed: true, active: false });
 });
 
 unmap("x");
