@@ -22,7 +22,7 @@
    unmap
  */
 
-Hints.characters = "htnsdcrbmwvzaoeuiqjk";
+Hints.characters = "htnsdcrbmwvzaoeui;qjkx";
 Hints.charactersUpper = false;
 
 settings.hintAlign = "left";
