@@ -162,8 +162,8 @@ mapkey("d", "outdent parent tab", () => {
 
 // link
 
-unmap("g");
-mapkey("g", "#1Open a link", () => {
+unmap("m");
+mapkey("m", "#1Open a link", () => {
   Hints.characters = hintsCharactersAll;
   Hints.create("", Hints.dispatchMouseClick);
 });
@@ -174,8 +174,8 @@ mapkey("c", "#1Open a link in non-active new tab or click", () => {
   Hints.create("", Hints.dispatchMouseClick, { tabbed: true, active: false });
 });
 
-unmap("f");
-mapkey("f", "#1Open a link in non-active new tab or click by right key", () => {
+unmap("g");
+mapkey("g", "#1Open a link in non-active new tab or click by right key", () => {
   Hints.characters = hintsCharactersRight;
   Hints.create("", Hints.dispatchMouseClick, { tabbed: true, active: false });
 });
@@ -272,15 +272,15 @@ mapkey("<Ctrl-Alt-;>", "エゴサーチ / Twitter", () => {
 
 // copy
 
-unmap("m");
-mapkey("m", "Copy title and link to markdown without hash", () => {
+unmap("f");
+mapkey("f", "Copy title and link to markdown without hash", () => {
   const url = new URL(window.location.href);
   url.hash = "";
   Clipboard.write(`[${document.title}](${url.href})`);
 });
 
-unmap("M");
-mapkey("M", "Copy title and link to markdown", () => {
+unmap("F");
+mapkey("F", "Copy title and link to markdown", () => {
   Clipboard.write(`[${document.title}](${window.location.href})`);
 });
 
