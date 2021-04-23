@@ -178,12 +178,14 @@ unmap("g");
 mapkey("g", "#1Open a link in non-active new tab or click by right key", () => {
   Hints.characters = hintsCharactersRight;
   Hints.create("", Hints.dispatchMouseClick, { tabbed: true, active: false });
+  Hints.characters = hintsCharactersAll;
 });
 
 unmap("p");
 mapkey("p", "#1Open a link in non-active new tab or click by left key", () => {
   Hints.characters = hintsCharactersLeft;
   Hints.create("", Hints.dispatchMouseClick, { tabbed: true, active: false });
+  Hints.characters = hintsCharactersAll;
 });
 
 unmap("x");
