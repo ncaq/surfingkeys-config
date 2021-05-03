@@ -28,12 +28,14 @@ const hintsCharactersLeft = "aoeui;qjkx";
 
 Hints.characters = hintsCharactersAll;
 Hints.charactersUpper = false;
-
 settings.hintAlign = "left";
-settings.omnibarMaxResults = 20;
+
 settings.blacklistPattern = /tt-rss.ncaq.net/;
-settings.tabsMRUOrder = false;
+
 settings.historyMUOrder = false;
+settings.tabsMRUOrder = false;
+settings.omnibarMaxResults = 20;
+settings.tabsThreshold = 0; // 常にomnibarを使う。
 
 // scroll
 
