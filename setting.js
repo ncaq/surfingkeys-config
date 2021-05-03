@@ -28,7 +28,7 @@ const hintsCharactersLeft = "aoeui;qjkx";
 
 Hints.characters = hintsCharactersAll;
 Hints.charactersUpper = false;
-Hints.style("font-size: 20px;");
+Hints.style("font-size: 16px !important;");
 settings.hintAlign = "left";
 
 settings.blacklistPattern = /tt-rss.ncaq.net/;
