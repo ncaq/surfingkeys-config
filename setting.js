@@ -9,10 +9,7 @@
    Clipboard
    Front
    Hints
-   Insert
-   Normal
    RUNTIME
-   isEditable
    iunmap
    map
    mapkey
