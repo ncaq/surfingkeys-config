@@ -163,7 +163,7 @@ mapkey("d", "outdent parent tab", () => {
 // link
 
 // iと同じだし、C-iはページの情報を取得するのに使いたいので除外します。
-unmap("C-i");
+unmap("<Ctrl-i>");
 
 unmap("m");
 mapkey("m", "#1Open a link", () => {
