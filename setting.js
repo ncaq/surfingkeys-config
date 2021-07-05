@@ -213,7 +213,9 @@ mapkey("<Ctrl-'>", "DeepL", () => {
   const selection = window.getSelection().toString();
   if (selection !== "") {
     tabOpenLink(
-      `https://www.deepl.com/translator#en/ja/${encodeURIComponent(selection)}`
+      `https://www.deepl.com/translator#en/ja/${encodeURIComponent(
+        selection
+      ).replaceAll("%2F", "\\%2F")}` // DeepLはスラッシュを特別扱いするためエスケープします。
     );
   }
 });
