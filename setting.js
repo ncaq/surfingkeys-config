@@ -165,8 +165,8 @@ mapkey("d", "outdent parent tab", () => {
 // iと同じだし、C-iはページの情報を取得するのに使いたいので除外します。
 unmap("<Ctrl-i>");
 
-unmap("m");
-mapkey("m", "#1Open a link", () => {
+unmap("x");
+mapkey("x", "#1Open a link", () => {
   Hints.characters = hintsCharactersAll;
   Hints.create("", Hints.dispatchMouseClick);
 });
@@ -177,10 +177,24 @@ mapkey("c", "#1Open a link in non-active new tab or click", () => {
   Hints.create("", Hints.dispatchMouseClick, { tabbed: true, active: false });
 });
 
+unmap("m");
+mapkey("m", "#1Open a link by right key", () => {
+  Hints.characters = hintsCharactersRight;
+  Hints.create("", Hints.dispatchMouseClick);
+  Hints.characters = hintsCharactersAll;
+});
+
 unmap("g");
 mapkey("g", "#1Open a link in non-active new tab or click by right key", () => {
   Hints.characters = hintsCharactersRight;
   Hints.create("", Hints.dispatchMouseClick, { tabbed: true, active: false });
+  Hints.characters = hintsCharactersAll;
+});
+
+unmap(";");
+mapkey(";", "#1Open a link by left key", () => {
+  Hints.characters = hintsCharactersLeft;
+  Hints.create("", Hints.dispatchMouseClick);
   Hints.characters = hintsCharactersAll;
 });
 
@@ -189,11 +203,6 @@ mapkey("p", "#1Open a link in non-active new tab or click by left key", () => {
   Hints.characters = hintsCharactersLeft;
   Hints.create("", Hints.dispatchMouseClick, { tabbed: true, active: false });
   Hints.characters = hintsCharactersAll;
-});
-
-unmap("x");
-mapkey("x", "#3Choose a tab", () => {
-  Front.chooseTab();
 });
 
 // move
