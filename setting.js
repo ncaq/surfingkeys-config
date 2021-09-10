@@ -19,9 +19,9 @@
    unmap
  */
 
-const hintsCharactersAll = "htnsdcrbmwvzaoeui;qjkx";
 const hintsCharactersRight = "htnsdcrbmwvz";
 const hintsCharactersLeft = "aoeui;qjkx";
+const hintsCharactersAll = hintsCharactersRight + hintsCharactersLeft;
 
 Hints.characters = hintsCharactersAll;
 Hints.charactersUpper = false;
