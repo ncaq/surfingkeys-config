@@ -6,29 +6,23 @@
  */
 
 /* global
-   Clipboard
-   Front
-   Hints
-   RUNTIME
-   iunmap
-   map
-   mapkey
+   api
    searchSelectedWith
    settings
-   tabOpenLink
-   unmap
  */
+
+const { Clipboard, Hints, RUNTIME, iunmap, map, mapkey, tabOpenLink, unmap } =
+  api;
 
 const hintsCharactersRight = "htnsdcrbmwvz";
 const hintsCharactersLeft = "aoeui;qjkx";
 const hintsCharactersAll = hintsCharactersRight + hintsCharactersLeft;
 
-Hints.characters = hintsCharactersAll;
 Hints.charactersUpper = false;
 Hints.style("font-size: 16px !important;");
 settings.hintAlign = "left";
 
-settings.blacklistPattern = /tt-rss.ncaq.net/;
+settings.blocklistPattern = /tt-rss.ncaq.net/;
 
 settings.historyMUOrder = false;
 settings.tabsMRUOrder = false;
@@ -167,42 +161,42 @@ unmap("<Ctrl-i>");
 
 unmap("x");
 mapkey("x", "#1Open a link", () => {
-  Hints.characters = hintsCharactersAll;
+  Hints.setCharacters(hintsCharactersAll);
   Hints.create("", Hints.dispatchMouseClick);
 });
 
 unmap("c");
 mapkey("c", "#1Open a link in non-active new tab or click", () => {
-  Hints.characters = hintsCharactersAll;
+  Hints.setCharacters(hintsCharactersAll);
   Hints.create("", Hints.dispatchMouseClick, { tabbed: true, active: false });
 });
 
 unmap("m");
 mapkey("m", "#1Open a link by right key", () => {
-  Hints.characters = hintsCharactersRight;
+  Hints.setCharacters(hintsCharactersRight);
   Hints.create("", Hints.dispatchMouseClick);
-  Hints.characters = hintsCharactersAll;
+  Hints.setCharacters(hintsCharactersAll);
 });
 
 unmap("g");
 mapkey("g", "#1Open a link in non-active new tab or click by right key", () => {
-  Hints.characters = hintsCharactersRight;
+  Hints.setCharacters(hintsCharactersRight);
   Hints.create("", Hints.dispatchMouseClick, { tabbed: true, active: false });
-  Hints.characters = hintsCharactersAll;
+  Hints.setCharacters(hintsCharactersAll);
 });
 
 unmap(";");
 mapkey(";", "#1Open a link by left key", () => {
-  Hints.characters = hintsCharactersLeft;
+  Hints.setCharacters(hintsCharactersLeft);
   Hints.create("", Hints.dispatchMouseClick);
-  Hints.characters = hintsCharactersAll;
+  Hints.setCharacters(hintsCharactersAll);
 });
 
 unmap("p");
 mapkey("p", "#1Open a link in non-active new tab or click by left key", () => {
-  Hints.characters = hintsCharactersLeft;
+  Hints.setCharacters(hintsCharactersLeft);
   Hints.create("", Hints.dispatchMouseClick, { tabbed: true, active: false });
-  Hints.characters = hintsCharactersAll;
+  Hints.setCharacters(hintsCharactersAll);
 });
 
 // move
