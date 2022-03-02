@@ -403,11 +403,6 @@ eslint-plugin-import@^2.23.4:
     resolve "^1.20.0"
     tsconfig-paths "^3.9.0"
 
-eslint-plugin-mysticatea@^4.2.4:
-  version "4.2.4"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-mysticatea/-/eslint-plugin-mysticatea-4.2.4.tgz#4be3bb3bd674d4ad8372f02e98c1cc74714e833f"
-  integrity sha512-yZwnLhRXOKd9K6ChIxG49T3G9+InFoiDRnvwuC09Gc4JtAfTTvpT8wboBxAWdnApVoJNWtjhc6+rZDpAMQ79uA==
-
 eslint-scope@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/eslint-scope/-/eslint-scope-5.1.1.tgz#e786e59a66cb92b3f6c1fb0d508aab174848f48c"
