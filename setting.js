@@ -208,7 +208,14 @@ map("S", "D");
 
 unmap("'");
 mapkey("'", "Google", () => {
-  searchSelectedWith("https://www.google.com/search?q=", false, false, "");
+  const selection = window.getSelection().toString();
+  if (selection !== "") {
+    tabOpenLink(
+      `https://www.google.com/search?client=firefox-b-d&q=${encodeURIComponent(
+        selection
+      )}`
+    );
+  }
 });
 
 unmap("<Ctrl-'>");
