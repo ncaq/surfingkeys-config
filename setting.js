@@ -323,3 +323,6 @@ mapkey("<Ctrl-=>", "#3zoom reset", () => {
     zoomFactor: 0,
   });
 });
+
+// blacklistのキーはxkeysnailやKeyhacによって無効化されているけど誤爆しやすいので無効化
+unmap("<Alt-s>");
