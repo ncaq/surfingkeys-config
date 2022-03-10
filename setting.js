@@ -248,7 +248,12 @@ mapkey("<Alt-'>", "Google 翻訳", () => {
 });
 
 mapkey("<Ctrl-Alt-'>", "英辞郎 on the WEB Pro Lite", () => {
-  searchSelectedWith("https://eowf.alc.co.jp/search?q=", false, false, "");
+  const selection = window.getSelection().toString();
+  if (selection !== "") {
+    tabOpenLink(
+      `https://eowf.alc.co.jp/search?q=${encodeURIComponent(selection)}`
+    );
+  }
 });
 
 mapkey("<Ctrl-;>", "はてなブックマーク", () => {
