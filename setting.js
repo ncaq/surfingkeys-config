@@ -103,11 +103,16 @@ mapkey("z", "Scroll up of page", () => {
 
 // tab
 
+unmap("h");
 map("h", "E");
+unmap("a");
 map("a", "E");
+unmap("s");
 map("s", "R");
+unmap("e");
 map("e", "R");
 
+unmap("-");
 map("-", "X");
 unmap("w");
 mapkey("w", "#3Close current tab", () => {
