@@ -7,7 +7,6 @@
 
 /* global
    api
-   searchSelectedWith
    settings
  */
 
