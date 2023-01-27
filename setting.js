@@ -203,10 +203,14 @@ mapkey("p", "#1Open a link in non-active new tab or click by left key", () => {
   Hints.setCharacters(hintsCharactersAll);
 });
 
-// move
+// 戻る進む。
 
+// 戻る。
 map("H", "S");
+map("A", "S");
+// 進む。
 map("S", "D");
+map("E", "D");
 
 // open with external service
 
