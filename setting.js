@@ -87,38 +87,38 @@ function scrollToSmooth(position) {
   });
 }
 
-mapkeyAndUnmap("o", "Scroll down of half", () => {
+mapkeyAndUnmap("o", "#2Scroll down of half", () => {
   scrollBySmooth(window.innerHeight / 2, 1);
 });
-mapkeyAndUnmap("u", "Scroll up of half", () => {
+mapkeyAndUnmap("u", "#2Scroll up of half", () => {
   scrollBySmooth(window.innerHeight / 2, -1);
 });
 
-mapkeyAndUnmap(",", "Scroll to beginning", () => {
+mapkeyAndUnmap(",", "#2Scroll to beginning", () => {
   scrollToSmooth(0);
 });
-mapkeyAndUnmap(".", "Scroll to ending", () => {
+mapkeyAndUnmap(".", "#2Scroll to ending", () => {
   scrollToSmooth(document.body.scrollHeight);
 });
 
-mapkeyAndUnmap("t", "Scroll up of line", () => {
+mapkeyAndUnmap("t", "#2Scroll up of line", () => {
   scrollBySmooth(window.innerHeight / 10, -1);
 });
-mapkeyAndUnmap("n", "Scroll down of line", () => {
+mapkeyAndUnmap("n", "#2Scroll down of line", () => {
   scrollBySmooth(window.innerHeight / 10, 1);
 });
 
-mapkeyAndUnmap("k", "Scroll up of line", () => {
+mapkeyAndUnmap("k", "#2Scroll up of line", () => {
   scrollBySmooth(window.innerHeight / 10, -1);
 });
-mapkeyAndUnmap("j", "Scroll down of line", () => {
+mapkeyAndUnmap("j", "#2Scroll down of line", () => {
   scrollBySmooth(window.innerHeight / 10, 1);
 });
 
-mapkeyAndUnmap("v", "Scroll down of page", () => {
+mapkeyAndUnmap("v", "#2Scroll down of page", () => {
   scrollBySmooth(window.innerHeight * 0.9, 1);
 });
-mapkeyAndUnmap("z", "Scroll up of page", () => {
+mapkeyAndUnmap("z", "#2Scroll up of page", () => {
   scrollBySmooth(window.innerHeight * 0.9, -1);
 });
 
