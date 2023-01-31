@@ -25,7 +25,7 @@ const { Clipboard, Hints, RUNTIME, iunmap, map, mapkey, tabOpenLink, unmap } =
  * @param {object} [options=null] `domain`
  */
 function mapkeyAndUnmap(keys, annotation, jscode, options) {
-  unmap(keys);
+  unmap(keys, options?.domain);
   mapkey(keys, annotation, jscode, options);
 }
 
