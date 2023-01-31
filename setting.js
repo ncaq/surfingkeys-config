@@ -145,7 +145,7 @@ mapkeyAndUnmap("q", "#3Close current tab", () => {
 const tstId = "treestyletab@piro.sakura.ne.jp";
 
 // 親のタブに移る
-mapkeyAndUnmap("b", "focus parent tab", async () => {
+mapkeyAndUnmap("b", "#3Focus parent tab", async () => {
   const { id } = await browser.runtime.sendMessage(tstId, {
     type: "get-tree",
     tab: "current",
@@ -166,7 +166,7 @@ mapkeyAndUnmap("b", "focus parent tab", async () => {
 });
 
 // タブを1段階上昇させる
-mapkeyAndUnmap("d", "outdent parent tab", () => {
+mapkeyAndUnmap("d", "#3Outdent parent tab", () => {
   browser.runtime.sendMessage(tstId, {
     type: "outdent",
     tab: "current",
