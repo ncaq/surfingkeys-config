@@ -318,19 +318,19 @@ mapkeyAndUnmap("<Ctrl-Alt-;>", "エゴサーチ / Twitter", () => {
 
 // copy
 
-mapkeyAndUnmap("f", "Copy title and link to markdown without hash", () => {
+mapkeyAndUnmap("f", "#7Copy title and link to markdown without hash", () => {
   const url = new URL(window.location.href);
   url.hash = "";
   Clipboard.write(`[${document.title}](${url.href})`);
 });
 
-mapkeyAndUnmap("F", "Copy title and link to markdown", () => {
+mapkeyAndUnmap("F", "#7Copy title and link to markdown", () => {
   Clipboard.write(`[${document.title}](${window.location.href})`);
 });
 
 mapkeyAndUnmap(
   "l",
-  "Copy title and link to human readable without hash",
+  "#7Copy title and link to human readable without hash",
   () => {
     const url = new URL(window.location.href);
     url.hash = "";
@@ -338,7 +338,7 @@ mapkeyAndUnmap(
   }
 );
 
-mapkeyAndUnmap("L", "Copy title and link to human readable", () => {
+mapkeyAndUnmap("L", "#7Copy title and link to human readable", () => {
   Clipboard.write(`[${document.title}]: ${window.location.href}`);
 });
 
