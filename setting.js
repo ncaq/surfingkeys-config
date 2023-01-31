@@ -15,6 +15,21 @@ const { Clipboard, Hints, RUNTIME, iunmap, map, mapkey, tabOpenLink, unmap } =
   api;
 
 /**
+ * `map`する上で`unmap`も同時に行う。
+ * @see {@link https://github.com/brookhong/Surfingkeys/blob/3999da774f409f3756b5f6109be8092eda8dd9b8/src/content_scripts/common/api.js#L136}
+ * @param {string} new_keystroke
+ * @param {string} old_keystroke
+ * @param {regex} [domain=null]
+ * @param {string} [new_annotation=null]
+ *
+ */
+// eslint-disable-next-line camelcase
+function mapAndUnmap(new_keystroke, old_keystroke, domain, new_annotation) {
+  unmap(new_keystroke, domain);
+  map(new_keystroke, old_keystroke, domain, new_annotation);
+}
+
+/**
  * `mapkey`する上で`unmap`も同時に行う。
  * 基本的に同時に行っている。
  * helpに古いキーバインドの内容が残らないことも期待している。
@@ -109,17 +124,12 @@ mapkeyAndUnmap("z", "Scroll up of page", () => {
 
 // tab
 
-unmap("h");
-map("h", "E");
-unmap("a");
-map("a", "E");
-unmap("s");
-map("s", "R");
-unmap("e");
-map("e", "R");
+mapAndUnmap("h", "E");
+mapAndUnmap("a", "E");
+mapAndUnmap("s", "R");
+mapAndUnmap("e", "R");
 
-unmap("-");
-map("-", "X");
+mapAndUnmap("-", "X");
 mapkeyAndUnmap("w", "#3Close current tab", () => {
   RUNTIME("closeTab");
 });
