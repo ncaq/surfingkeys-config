@@ -11,8 +11,17 @@
    settings
  */
 
-const { Clipboard, Hints, RUNTIME, iunmap, map, mapkey, tabOpenLink, unmap } =
-  api;
+const {
+  Clipboard,
+  Front,
+  Hints,
+  RUNTIME,
+  iunmap,
+  map,
+  mapkey,
+  tabOpenLink,
+  unmap,
+} = api;
 
 /**
  * `map`する上で`unmap`も同時に行う。
@@ -138,6 +147,14 @@ mapkeyAndUnmap("w", "#3Close current tab", () => {
 });
 mapkeyAndUnmap("q", "#3Close current tab", () => {
   RUNTIME("closeTab");
+});
+
+// 最近閉じたタブや履歴を閲覧。
+mapkeyAndUnmap("M-,", "#8Open RecentlyClosed", () => {
+  Front.openOmnibar({ type: "RecentlyClosed" });
+});
+mapkeyAndUnmap("C-M-,", "#8Open History", () => {
+  Front.openOmnibar({ type: "History" });
 });
 
 // Tree Style Tabs
