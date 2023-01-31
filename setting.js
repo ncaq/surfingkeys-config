@@ -124,12 +124,15 @@ mapkeyAndUnmap("z", "Scroll up of page", () => {
 
 // tab
 
+// フォーカスしているタブを移動。
 mapAndUnmap("h", "E");
 mapAndUnmap("a", "E");
 mapAndUnmap("s", "R");
 mapAndUnmap("e", "R");
 
+// 閉じたタブを復帰させる。
 mapAndUnmap("-", "X");
+// タブを閉じる。
 mapkeyAndUnmap("w", "#3Close current tab", () => {
   RUNTIME("closeTab");
 });
@@ -175,6 +178,7 @@ mapkeyAndUnmap("d", "outdent parent tab", () => {
 // iと同じだし、C-iはページの情報を取得するのに使いたいので除外します。
 unmap("<Ctrl-i>");
 
+// キーボードでリンクを移動。
 mapkeyAndUnmap("x", "#1Open a link", () => {
   Hints.setCharacters(hintsCharactersAll);
   Hints.create("", Hints.dispatchMouseClick);
