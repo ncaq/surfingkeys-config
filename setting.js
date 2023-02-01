@@ -150,10 +150,10 @@ mapkeyAndUnmap("q", "#3Close current tab", () => {
 });
 
 // 最近閉じたタブや履歴を閲覧。
-mapkeyAndUnmap("<Alt-'>", "#8Open RecentlyClosed", () => {
+mapkeyAndUnmap("<Alt-,>", "#8Open RecentlyClosed", () => {
   Front.openOmnibar({ type: "RecentlyClosed" });
 });
-mapkeyAndUnmap("<Ctrl-Alt-'>", "#8Open History", () => {
+mapkeyAndUnmap("<Ctrl-Alt-,>", "#8Open History", () => {
   Front.openOmnibar({ type: "History" });
 });
 
