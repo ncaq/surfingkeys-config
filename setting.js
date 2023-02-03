@@ -23,36 +23,6 @@ const {
   unmap,
 } = api;
 
-/**
- * `map`する上で`unmap`も同時に行う。
- * @see {@link https://github.com/brookhong/Surfingkeys/blob/3999da774f409f3756b5f6109be8092eda8dd9b8/src/content_scripts/common/api.js#L136}
- * @param {string} new_keystroke
- * @param {string} old_keystroke
- * @param {regex} [domain=null]
- * @param {string} [new_annotation=null]
- *
- */
-// eslint-disable-next-line camelcase
-function mapAndUnmap(new_keystroke, old_keystroke, domain, new_annotation) {
-  unmap(new_keystroke, domain);
-  map(new_keystroke, old_keystroke, domain, new_annotation);
-}
-
-/**
- * `mapkey`する上で`unmap`も同時に行う。
- * 基本的に同時に行っている。
- * helpに古いキーバインドの内容が残らないことも期待している。
- * @see {@link https://github.com/brookhong/Surfingkeys/blob/3999da774f409f3756b5f6109be8092eda8dd9b8/src/content_scripts/common/api.js#L93}
- * @param {string} keys
- * @param {string} annotation
- * @param {function} jscode
- * @param {object} [options=null] `domain`
- */
-function mapkeyAndUnmap(keys, annotation, jscode, options) {
-  unmap(keys, options?.domain);
-  mapkey(keys, annotation, jscode, options);
-}
-
 const hintsCharactersRight = "htnsdcrbmwvz";
 const hintsCharactersLeft = "aoeui;qjkx";
 const hintsCharactersAll = hintsCharactersRight + hintsCharactersLeft;
@@ -96,64 +66,64 @@ function scrollToSmooth(position) {
   });
 }
 
-mapkeyAndUnmap("o", "#2Scroll down of half", () => {
+mapkey("o", "#2Scroll down of half", () => {
   scrollBySmooth(window.innerHeight / 2, 1);
 });
-mapkeyAndUnmap("u", "#2Scroll up of half", () => {
+mapkey("u", "#2Scroll up of half", () => {
   scrollBySmooth(window.innerHeight / 2, -1);
 });
 
-mapkeyAndUnmap(",", "#2Scroll to beginning", () => {
+mapkey(",", "#2Scroll to beginning", () => {
   scrollToSmooth(0);
 });
-mapkeyAndUnmap(".", "#2Scroll to ending", () => {
+mapkey(".", "#2Scroll to ending", () => {
   scrollToSmooth(document.body.scrollHeight);
 });
 
-mapkeyAndUnmap("t", "#2Scroll up of line", () => {
+mapkey("t", "#2Scroll up of line", () => {
   scrollBySmooth(window.innerHeight / 10, -1);
 });
-mapkeyAndUnmap("n", "#2Scroll down of line", () => {
+mapkey("n", "#2Scroll down of line", () => {
   scrollBySmooth(window.innerHeight / 10, 1);
 });
 
-mapkeyAndUnmap("k", "#2Scroll up of line", () => {
+mapkey("k", "#2Scroll up of line", () => {
   scrollBySmooth(window.innerHeight / 10, -1);
 });
-mapkeyAndUnmap("j", "#2Scroll down of line", () => {
+mapkey("j", "#2Scroll down of line", () => {
   scrollBySmooth(window.innerHeight / 10, 1);
 });
 
-mapkeyAndUnmap("v", "#2Scroll down of page", () => {
+mapkey("v", "#2Scroll down of page", () => {
   scrollBySmooth(window.innerHeight * 0.9, 1);
 });
-mapkeyAndUnmap("z", "#2Scroll up of page", () => {
+mapkey("z", "#2Scroll up of page", () => {
   scrollBySmooth(window.innerHeight * 0.9, -1);
 });
 
 // tab
 
 // フォーカスしているタブを移動。
-mapAndUnmap("h", "E");
-mapAndUnmap("a", "E");
-mapAndUnmap("s", "R");
-mapAndUnmap("e", "R");
+map("h", "E");
+map("a", "E");
+map("s", "R");
+map("e", "R");
 
 // 閉じたタブを復帰させる。
-mapAndUnmap("-", "X");
+map("-", "X");
 // タブを閉じる。
-mapkeyAndUnmap("w", "#3Close current tab", () => {
+mapkey("w", "#3Close current tab", () => {
   RUNTIME("closeTab");
 });
-mapkeyAndUnmap("q", "#3Close current tab", () => {
+mapkey("q", "#3Close current tab", () => {
   RUNTIME("closeTab");
 });
 
 // 最近閉じたタブや履歴を閲覧。
-mapkeyAndUnmap("<Alt-,>", "#8Open RecentlyClosed", () => {
+mapkey("<Alt-,>", "#8Open RecentlyClosed", () => {
   Front.openOmnibar({ type: "RecentlyClosed" });
 });
-mapkeyAndUnmap("<Ctrl-Alt-,>", "#8Open History", () => {
+mapkey("<Ctrl-Alt-,>", "#8Open History", () => {
   Front.openOmnibar({ type: "History" });
 });
 
@@ -162,7 +132,7 @@ mapkeyAndUnmap("<Ctrl-Alt-,>", "#8Open History", () => {
 const tstId = "treestyletab@piro.sakura.ne.jp";
 
 // 親のタブに移る
-mapkeyAndUnmap("b", "#3Focus parent tab", async () => {
+mapkey("b", "#3Focus parent tab", async () => {
   const { id } = await browser.runtime.sendMessage(tstId, {
     type: "get-tree",
     tab: "current",
@@ -183,7 +153,7 @@ mapkeyAndUnmap("b", "#3Focus parent tab", async () => {
 });
 
 // タブを1段階上昇させる
-mapkeyAndUnmap("d", "#3Outdent parent tab", () => {
+mapkey("d", "#3Outdent parent tab", () => {
   browser.runtime.sendMessage(tstId, {
     type: "outdent",
     tab: "current",
@@ -196,47 +166,39 @@ mapkeyAndUnmap("d", "#3Outdent parent tab", () => {
 unmap("<Ctrl-i>");
 
 // キーボードでリンクを移動。
-mapkeyAndUnmap("x", "#1Open a link", () => {
+mapkey("x", "#1Open a link", () => {
   Hints.setCharacters(hintsCharactersAll);
   Hints.create("", Hints.dispatchMouseClick);
 });
 
-mapkeyAndUnmap("c", "#1Open a link in non-active new tab or click", () => {
+mapkey("c", "#1Open a link in non-active new tab or click", () => {
   Hints.setCharacters(hintsCharactersAll);
   Hints.create("", Hints.dispatchMouseClick, { tabbed: true, active: false });
 });
 
-mapkeyAndUnmap("m", "#1Open a link by right key", () => {
+mapkey("m", "#1Open a link by right key", () => {
   Hints.setCharacters(hintsCharactersRight);
   Hints.create("", Hints.dispatchMouseClick);
   Hints.setCharacters(hintsCharactersAll);
 });
 
-mapkeyAndUnmap(
-  "g",
-  "#1Open a link in non-active new tab or click by right key",
-  () => {
-    Hints.setCharacters(hintsCharactersRight);
-    Hints.create("", Hints.dispatchMouseClick, { tabbed: true, active: false });
-    Hints.setCharacters(hintsCharactersAll);
-  }
-);
+mapkey("g", "#1Open a link in non-active new tab or click by right key", () => {
+  Hints.setCharacters(hintsCharactersRight);
+  Hints.create("", Hints.dispatchMouseClick, { tabbed: true, active: false });
+  Hints.setCharacters(hintsCharactersAll);
+});
 
-mapkeyAndUnmap(";", "#1Open a link by left key", () => {
+mapkey(";", "#1Open a link by left key", () => {
   Hints.setCharacters(hintsCharactersLeft);
   Hints.create("", Hints.dispatchMouseClick);
   Hints.setCharacters(hintsCharactersAll);
 });
 
-mapkeyAndUnmap(
-  "p",
-  "#1Open a link in non-active new tab or click by left key",
-  () => {
-    Hints.setCharacters(hintsCharactersLeft);
-    Hints.create("", Hints.dispatchMouseClick, { tabbed: true, active: false });
-    Hints.setCharacters(hintsCharactersAll);
-  }
-);
+mapkey("p", "#1Open a link in non-active new tab or click by left key", () => {
+  Hints.setCharacters(hintsCharactersLeft);
+  Hints.create("", Hints.dispatchMouseClick, { tabbed: true, active: false });
+  Hints.setCharacters(hintsCharactersAll);
+});
 
 // 戻る進む。
 
@@ -249,7 +211,7 @@ map("E", "D");
 
 // open with external service
 
-mapkeyAndUnmap("'", "Google", () => {
+mapkey("'", "Google", () => {
   const selection = window.getSelection().toString();
   if (selection !== "") {
     tabOpenLink(
@@ -260,7 +222,7 @@ mapkeyAndUnmap("'", "Google", () => {
   }
 });
 
-mapkeyAndUnmap("<Ctrl-'>", "DeepL", () => {
+mapkey("<Ctrl-'>", "DeepL", () => {
   const selection = window.getSelection().toString();
   if (selection !== "") {
     tabOpenLink(
@@ -271,7 +233,7 @@ mapkeyAndUnmap("<Ctrl-'>", "DeepL", () => {
   }
 });
 
-mapkeyAndUnmap("<Alt-'>", "Google 翻訳", () => {
+mapkey("<Alt-'>", "Google 翻訳", () => {
   const selection = window.getSelection().toString();
   if (selection === "") {
     // 文字列選択してない場合はページ自体を翻訳にかける
@@ -288,7 +250,7 @@ mapkeyAndUnmap("<Alt-'>", "Google 翻訳", () => {
   }
 });
 
-mapkeyAndUnmap("<Ctrl-Alt-'>", "英辞郎 on the WEB Pro Lite", () => {
+mapkey("<Ctrl-Alt-'>", "英辞郎 on the WEB Pro Lite", () => {
   const selection = window.getSelection().toString();
   if (selection !== "") {
     tabOpenLink(
@@ -297,7 +259,7 @@ mapkeyAndUnmap("<Ctrl-Alt-'>", "英辞郎 on the WEB Pro Lite", () => {
   }
 });
 
-mapkeyAndUnmap("<Ctrl-;>", "はてなブックマーク", () => {
+mapkey("<Ctrl-;>", "はてなブックマーク", () => {
   const { location } = window;
   switch (location.protocol) {
     case "http:": {
@@ -323,11 +285,11 @@ mapkeyAndUnmap("<Ctrl-;>", "はてなブックマーク", () => {
 
 // open the Twitter
 
-mapkeyAndUnmap("<Alt-;>", "通知 / Twitter", () => {
+mapkey("<Alt-;>", "通知 / Twitter", () => {
   tabOpenLink("https://twitter.com/notifications");
 });
 
-mapkeyAndUnmap("<Ctrl-Alt-;>", "エゴサーチ / Twitter", () => {
+mapkey("<Ctrl-Alt-;>", "エゴサーチ / Twitter", () => {
   tabOpenLink(
     "https://twitter.com/search?q=%22ncaq%22%20OR%20%22%E3%82%A8%E3%83%8C%E3%83%A6%E3%83%AB%22%20OR%20%22%E3%81%88%E3%81%AC%E3%82%86%E3%82%8B%22%20OR%20twitter.com%2Fncaq%20-from%3Ancaq%20OR%20%40ncaq_do_not_exist&f=live"
   );
@@ -335,27 +297,23 @@ mapkeyAndUnmap("<Ctrl-Alt-;>", "エゴサーチ / Twitter", () => {
 
 // copy
 
-mapkeyAndUnmap("f", "#7Copy title and link to markdown without hash", () => {
+mapkey("f", "#7Copy title and link to markdown without hash", () => {
   const url = new URL(window.location.href);
   url.hash = "";
   Clipboard.write(`[${document.title}](${url.href})`);
 });
 
-mapkeyAndUnmap("F", "#7Copy title and link to markdown", () => {
+mapkey("F", "#7Copy title and link to markdown", () => {
   Clipboard.write(`[${document.title}](${window.location.href})`);
 });
 
-mapkeyAndUnmap(
-  "l",
-  "#7Copy title and link to human readable without hash",
-  () => {
-    const url = new URL(window.location.href);
-    url.hash = "";
-    Clipboard.write(`[${document.title}]: ${url.href}`);
-  }
-);
+mapkey("l", "#7Copy title and link to human readable without hash", () => {
+  const url = new URL(window.location.href);
+  url.hash = "";
+  Clipboard.write(`[${document.title}]: ${url.href}`);
+});
 
-mapkeyAndUnmap("L", "#7Copy title and link to human readable", () => {
+mapkey("L", "#7Copy title and link to human readable", () => {
   Clipboard.write(`[${document.title}]: ${window.location.href}`);
 });
 
@@ -364,7 +322,7 @@ iunmap(":");
 
 // zoom
 
-mapkeyAndUnmap("<Ctrl-=>", "#3zoom reset", () => {
+mapkey("<Ctrl-=>", "#3zoom reset", () => {
   RUNTIME("setZoom", {
     zoomFactor: 0,
   });
