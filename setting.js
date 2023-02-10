@@ -41,8 +41,8 @@ settings.tabsThreshold = 0; // 常にomnibarを使う。
 // scroll
 
 /**
- * scrollByの動作がFirefox 65で予測不可能になったのでscrollToで再実装する
- * スムーズスクロールする
+ * scrollByの動作がFirefox 65で予測不可能になったのでscrollToで再実装する。
+ * スムーズスクロールする。
  * @param {number} size - スクロールするサイズ
  * @param {number} ward - 1か-1でスクロールする方向を制御
  */
@@ -55,7 +55,7 @@ function scrollBySmooth(size, ward) {
 }
 
 /**
- * 絶対位置スクロール
+ * 絶対位置スクロール。
  * @param {number} position - スクロールする位置
  */
 function scrollToSmooth(position) {
@@ -162,7 +162,7 @@ mapkey("d", "#3Outdent parent tab", () => {
 
 // link
 
-// iと同じだし、C-iはページの情報を取得するのに使いたいので除外します。
+// iと同じだし、C-iはページの情報を取得するのに使いたいので除外する。
 unmap("<Ctrl-i>");
 
 // キーボードでリンクを移動。
@@ -228,7 +228,7 @@ mapkey("<Ctrl-'>", "DeepL", () => {
     tabOpenLink(
       `https://www.deepl.com/translator#en/ja/${encodeURIComponent(
         selection
-      ).replaceAll("%2F", "\\%2F")}` // DeepLはスラッシュを特別扱いするためエスケープします。
+      ).replaceAll("%2F", "\\%2F")}` // DeepLはスラッシュを特別扱いするためエスケープする。
     );
   }
 });
@@ -297,24 +297,74 @@ mapkey("<Ctrl-Alt-;>", "エゴサーチ / Twitter", () => {
 
 // copy
 
+/**
+ * [Backlog｜チームで使うプロジェクト管理・タスク管理ツール](https://backlog.com/ja/)
+ * で妥当なtitleを整形して取得する。
+ *
+ * Backlogのtitleはそのまま`document.title`を利用すると、
+ * タイトルの無意味なサフィックス部分がかなり長い問題がある。
+ * またBacklogのMarkdownパーサーにはバグがあり、
+ * タイトルをそのままMarkdownのリンク文字列にすると、
+ * `[[]]`のパースに失敗して最初の括弧を削ってしまう。
+ *
+ * よってそれっぽいタイトルを整形する。
+ * ヌーラボには、
+ * `[Backlog-97500] お問い合わせ返信：一部文字が削られることについて`
+ * としてメールで問い合わせを発信している。
+ * しかし2022-06-16に問題を認識しているという返答がありましたが未だに修正されないので、
+ * バッドノウハウとしてこちらで対処する。
+ *
+ * URLなどを見てBacklogかどうかは判定しない。
+ * Backlogみたいなクラス名を持つページならば、
+ * ダックタイピング的にBacklogとして扱う。
+ * 深刻な問題に対応したり自動的に動くスクリプトではないので、
+ * これぐらい雑に扱っても大丈夫なはず。
+ */
+function backlogTitle() {
+  // 課題のキー。プロジェクトタイトルがプレフィックスに付くので純粋な数値ではない。
+  const issueNumber =
+    document.getElementsByClassName("ticket__key-number")?.[0]?.innerText;
+  // 課題に設定されたタイトル。
+  const issueTitle = document.getElementsByClassName(
+    "title-group__title-text"
+  )?.[0]?.innerText;
+  if (typeof issueNumber !== "string" || typeof issueTitle !== "string") {
+    // うまいこと取得できなかったら諦める。
+    return;
+  }
+  // 連続して角括弧を記述できないので、
+  // 最初にスペースを入れることで誤魔化す。
+  return ` [[${issueNumber}]] ${issueTitle}`;
+}
+
+/**
+ * 適切なタイトルを状況に応じて取得する。
+ * 特殊な状況でなければ`document.title`を利用する。
+ * 今の所Backlogにしか対応していないが、
+ * AWS CodeCommitなど`document.title`をロクに設定しないサイトに対応するかもしれない。
+ */
+function dwimTitle() {
+  return backlogTitle() || document.title;
+}
+
 mapkey("f", "#7Copy title and link to markdown without hash", () => {
   const url = new URL(window.location.href);
   url.hash = "";
-  Clipboard.write(`[${document.title}](${url.href})`);
+  Clipboard.write(`[${dwimTitle()}](${url.href})`);
 });
 
 mapkey("F", "#7Copy title and link to markdown", () => {
-  Clipboard.write(`[${document.title}](${window.location.href})`);
+  Clipboard.write(`[${dwimTitle()}](${window.location.href})`);
 });
 
 mapkey("l", "#7Copy title and link to human readable without hash", () => {
   const url = new URL(window.location.href);
   url.hash = "";
-  Clipboard.write(`[${document.title}]: ${url.href}`);
+  Clipboard.write(`[${dwimTitle()}]: ${url.href}`);
 });
 
 mapkey("L", "#7Copy title and link to human readable", () => {
-  Clipboard.write(`[${document.title}]: ${window.location.href}`);
+  Clipboard.write(`[${dwimTitle()}]: ${window.location.href}`);
 });
 
 // 絵文字
