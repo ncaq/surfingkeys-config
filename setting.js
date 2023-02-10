@@ -310,6 +310,10 @@ function githubCommitInPullRequestTitle() {
   if (typeof commitMessagePart !== "string") {
     return;
   }
+  // コミット単独のページだと既にタイトルに含まれているので追記しない。
+  if (document.title.includes(commitMessagePart)) {
+    return;
+  }
   return `${commitMessagePart} · ${document.title}`;
 }
 
@@ -344,8 +348,8 @@ function backlogTitle() {
   const issueTitle = document.getElementsByClassName(
     "title-group__title-text"
   )?.[0]?.innerText;
+  // うまいこと取得できなかったら諦める。
   if (typeof issueNumber !== "string" || typeof issueTitle !== "string") {
-    // うまいこと取得できなかったら諦める。
     return;
   }
   // 連続して角括弧を記述できないので、
