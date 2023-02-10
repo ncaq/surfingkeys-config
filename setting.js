@@ -298,6 +298,22 @@ mapkey("<Ctrl-Alt-;>", "エゴサーチ / Twitter", () => {
 // copy
 
 /**
+ * GitHubのPull Requestから開いたCommitのページのタイトルが、
+ * コミットメッセージを一切含まないのを修正。
+ */
+function githubCommitInPullRequestTitle() {
+  // GitHubによって勝手に長さによって省略されている。
+  // しかし全体を取ると複数行全部取ることになる。
+  // 最初の1行だけを取りたいが少しばかり複雑なロジックになりそうなので本格的に使いたくなるまで保留。
+  const commitMessagePart =
+    document.getElementsByClassName("commit-title")?.[0]?.innerText;
+  if (typeof commitMessagePart !== "string") {
+    return;
+  }
+  return `${commitMessagePart} · ${document.title}`;
+}
+
+/**
  * [Backlog｜チームで使うプロジェクト管理・タスク管理ツール](https://backlog.com/ja/)
  * で妥当なtitleを整形して取得する。
  *
@@ -344,7 +360,7 @@ function backlogTitle() {
  * AWS CodeCommitなど`document.title`をロクに設定しないサイトに対応するかもしれない。
  */
 function dwimTitle() {
-  return backlogTitle() || document.title;
+  return githubCommitInPullRequestTitle() || backlogTitle() || document.title;
 }
 
 mapkey("f", "#7Copy title and link to markdown without hash", () => {
