@@ -387,6 +387,47 @@ mapkey("L", "#7Copy title and link to human readable", () => {
   Clipboard.write(`[${dwimTitle()}]: ${window.location.href}`);
 });
 
+/**
+ * Twitterの埋め込みスクリプトを取得する。
+ */
+async function getTwitterEmbed(url) {
+  // TwitterのURLやツイートのURLじゃない場合は`undefined`を返す。
+  if (
+    !(
+      (url.hostname === "twitter.com" ||
+        url.hostname === "mobile.twitter.com") &&
+      /^\/\w+\/status\/\d+/.exec(url.pathname)
+    )
+  ) {
+    return undefined;
+  }
+  const publish = new URL("https://publish.twitter.com/oembed");
+  publish.searchParams.set("url", url.href);
+  // `script`タグは最後にまとめて入れるので取り除く。
+  publish.searchParams.set("omit_script", "t");
+  // ブラウザの言語設定を反映する。
+  publish.searchParams.set("lang", navigator.language || "en");
+  const response = await fetch(publish.href);
+  if (!response.ok) {
+    throw new Error(
+      `${publish.href}: response is not ok ${JSON.stringify(
+        response.statusText
+      )}`
+    );
+  }
+  const j = await response.json();
+  return j.html;
+}
+
+// ツイートを埋め込むボタンを押していちいちコピーして`script`タグを取り除くのが面倒なので、
+// キーを入力するだけでコピーできるようにする。
+mapkey("ye", "#7Copy Twitter embed", () => {
+  async function f() {
+    Clipboard.write(await getTwitterEmbed(new URL(window.location.href)));
+  }
+  f();
+});
+
 // 絵文字
 iunmap(":");
 
