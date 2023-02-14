@@ -360,8 +360,6 @@ function backlogTitle() {
 /**
  * 適切なタイトルを状況に応じて取得する。
  * 特殊な状況でなければ`document.title`を利用する。
- * 今の所Backlogにしか対応していないが、
- * AWS CodeCommitなど`document.title`をロクに設定しないサイトに対応するかもしれない。
  */
 function dwimTitle() {
   return githubCommitInPullRequestTitle() || backlogTitle() || document.title;
