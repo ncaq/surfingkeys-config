@@ -413,8 +413,7 @@ async function getTwitterEmbed(url) {
       )}`
     );
   }
-  const j = await response.json();
-  return j.html;
+  return (await response.json()).html;
 }
 
 // ツイートを埋め込むボタンを押していちいちコピーして`script`タグを取り除くのが面倒なので、
