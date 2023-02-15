@@ -355,9 +355,11 @@ function backlogTitle() {
   if (typeof issueNumber !== "string" || typeof issueTitle !== "string") {
     return undefined;
   }
-  // 連続して角括弧を記述できないので、
-  // 最初にスペースを入れることで誤魔化す。
-  return ` [[${issueNumber}]] ${issueTitle}`;
+  // Backlogでは連続して角括弧を始まりを記述できない。
+  // Slackではスペースの入った括弧を正しく処理できない。
+  // よって角括弧によるリンクは諦めます。
+  // リンクが角括弧のリンクに何か特別な効果があるわけでもないので妥協します。
+  return `${issueNumber} ${issueTitle}`;
 }
 
 /**
