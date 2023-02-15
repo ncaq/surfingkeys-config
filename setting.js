@@ -378,11 +378,11 @@ mapkey("F", "#7Copy title and link to markdown", () => {
 mapkey("l", "#7Copy title and link to human readable without hash", () => {
   const url = new URL(window.location.href);
   url.hash = "";
-  Clipboard.write(`[${dwimTitle()}]: ${url.href}`);
+  Clipboard.write(`[${dwimTitle().trim()}]: ${url.href}`);
 });
 
 mapkey("L", "#7Copy title and link to human readable", () => {
-  Clipboard.write(`[${dwimTitle()}]: ${window.location.href}`);
+  Clipboard.write(`[${dwimTitle().trim()}]: ${window.location.href}`);
 });
 
 /**
