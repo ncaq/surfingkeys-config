@@ -1,8 +1,11 @@
-/*
- * This setting include to copy code from Surfingkeys
- * Surfingkeys is MIT License
- * Surfingkeys create by brook hong
- * https://github.com/brookhong/Surfingkeys
+/**
+ * @module
+ * @copyright ncaq
+ * @license MIT
+ *
+ * This configuration is partly based on https://github.com/brookhong/Surfingkeys default settings.
+ * Surfingkeys is MIT licensed.
+ * Copyright (c) 2015 brookhong
  */
 
 /*
