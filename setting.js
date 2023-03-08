@@ -321,6 +321,19 @@ function githubCommitInPullRequestTitle() {
 }
 
 /**
+ * CodeCommitのタイトルはPRの内容を一切反映しない信じられない仕様。
+ */
+function codeCommitPullRequestTitle() {
+  const prTitle = document.querySelector(
+    ".awsui-util-action-stripe-title-large h1"
+  )?.innerText;
+  if (typeof prTitle !== "string") {
+    return undefined;
+  }
+  return `${prTitle} - ${document.title}`;
+}
+
+/**
  * [Backlog｜チームで使うプロジェクト管理・タスク管理ツール](https://backlog.com/ja/)
  * で妥当なtitleを整形して取得する。
  *
@@ -367,7 +380,12 @@ function backlogTitle() {
  * 特殊な状況でなければ`document.title`を利用する。
  */
 function dwimTitle() {
-  return githubCommitInPullRequestTitle() || backlogTitle() || document.title;
+  return (
+    githubCommitInPullRequestTitle() ||
+    codeCommitPullRequestTitle() ||
+    backlogTitle() ||
+    document.title
+  );
 }
 
 mapkey("f", "#7Copy title and link to markdown without hash", () => {
