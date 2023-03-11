@@ -310,11 +310,15 @@ function githubCommitInPullRequestTitle() {
   // 最初の1行だけを取りたいが少しばかり複雑なロジックになりそうなので本格的に使いたくなるまで保留。
   const commitMessagePart =
     document.getElementsByClassName("commit-title")?.[0]?.innerText;
-  if (typeof commitMessagePart !== "string") {
-    return undefined;
-  }
-  // コミット単独のページだと既にタイトルに含まれているので追記しない。
-  if (document.title.includes(commitMessagePart)) {
+  if (
+    // タイトルが取れてなければおそらく対象のページではない。
+    typeof commitMessagePart !== "string" ||
+    // PRのページっぽいか?
+    !document.location.pathname.split("/").includes("pull") ||
+    // コミット単独のページだと既にタイトルに含まれているので追記しない。
+    // タイトルに含まれているか判定はGitHubが`code`をバッククオートでマークアップしたタイトルにするのであまり信用できない。
+    document.title.includes(commitMessagePart)
+  ) {
     return undefined;
   }
   return `${commitMessagePart} · ${document.title}`;
