@@ -34,7 +34,7 @@ Hints.charactersUpper = false;
 Hints.style("font-size: 16px !important;");
 settings.hintAlign = "left";
 
-settings.blocklistPattern = /tt-rss.ncaq.net/;
+settings.blocklistPattern = /(docs\.google\.com)|(tt-rss\.ncaq\.net)/;
 
 settings.historyMUOrder = false;
 settings.tabsMRUOrder = false;
