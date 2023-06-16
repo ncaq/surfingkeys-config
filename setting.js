@@ -26,15 +26,21 @@ const {
   unmap,
 } = api;
 
-const hintsCharactersRight = "htnsdcrbmwvz";
-const hintsCharactersLeft = "aoeui;qjkx";
-const hintsCharactersAll = hintsCharactersRight + hintsCharactersLeft;
+// 無効化。
 
-Hints.charactersUpper = false;
-Hints.style("font-size: 16px !important;");
-settings.hintAlign = "left";
-
+// 干渉するのでSurfingkeysを無効化したいwebサイト。
 settings.blocklistPattern = /(docs\.google\.com)|(tt-rss\.ncaq\.net)/;
+
+// blacklistのキーはxkeysnailやKeyhacによって無効化されているけど誤爆しやすいので無効化します。
+unmap("<Alt-s>");
+
+// iと同じだし、C-iはページの情報を取得するのに使いたいので除外します。
+unmap("<Ctrl-i>");
+
+// 絵文字はIMEなどから入力します。
+iunmap(":");
+
+// settingsへの代入。
 
 settings.historyMUOrder = false;
 settings.tabsMRUOrder = false;
@@ -163,10 +169,15 @@ mapkey("d", "#3Outdent parent tab", () => {
   });
 });
 
-// link
+// リンク遷移。
 
-// iと同じだし、C-iはページの情報を取得するのに使いたいので除外する。
-unmap("<Ctrl-i>");
+const hintsCharactersRight = "htnsdcrbmwvz";
+const hintsCharactersLeft = "aoeui;qjkx";
+const hintsCharactersAll = hintsCharactersRight + hintsCharactersLeft;
+
+Hints.charactersUpper = false;
+Hints.style("font-size: 16px !important;");
+settings.hintAlign = "left";
 
 // キーボードでリンクを移動。
 mapkey("x", "#1Open a link", () => {
@@ -452,9 +463,6 @@ mapkey("ye", "#7Copy Twitter embed", () => {
   f();
 });
 
-// 絵文字
-iunmap(":");
-
 // zoom
 
 mapkey("<Ctrl-=>", "#3zoom reset", () => {
@@ -462,6 +470,3 @@ mapkey("<Ctrl-=>", "#3zoom reset", () => {
     zoomFactor: 0,
   });
 });
-
-// blacklistのキーはxkeysnailやKeyhacによって無効化されているけど誤爆しやすいので無効化
-unmap("<Alt-s>");
