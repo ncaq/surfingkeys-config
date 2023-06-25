@@ -14,17 +14,7 @@
    settings
  */
 
-const {
-  Clipboard,
-  Front,
-  Hints,
-  RUNTIME,
-  iunmap,
-  map,
-  mapkey,
-  tabOpenLink,
-  unmap,
-} = api;
+const { Clipboard, Front, Hints, RUNTIME, iunmap, map, mapkey, tabOpenLink, unmap } = api;
 
 // 無効化。
 
@@ -153,9 +143,7 @@ mapkey("b", "#3Focus parent tab", async () => {
     type: "get-tree",
     tabs: "*",
   });
-  const parentTab = tabs.find((tab) =>
-    tab.children.find((child) => child.id === id)
-  );
+  const parentTab = tabs.find((tab) => tab.children.find((child) => child.id === id));
   if (parentTab) {
     browser.runtime.sendMessage(tstId, {
       type: "focus",
@@ -231,11 +219,7 @@ map("E", "D");
 mapkey("'", "Google", () => {
   const selection = window.getSelection().toString();
   if (selection !== "") {
-    tabOpenLink(
-      `https://www.google.com/search?client=firefox-b-d&q=${encodeURIComponent(
-        selection
-      )}`
-    );
+    tabOpenLink(`https://www.google.com/search?client=firefox-b-d&q=${encodeURIComponent(selection)}`);
   }
 });
 
@@ -243,9 +227,7 @@ mapkey("<Ctrl-'>", "DeepL", () => {
   const selection = window.getSelection().toString();
   if (selection !== "") {
     tabOpenLink(
-      `https://www.deepl.com/translator#en/ja/${encodeURIComponent(
-        selection
-      ).replaceAll("%2F", "\\%2F")}` // DeepLはスラッシュを特別扱いするためエスケープする。
+      `https://www.deepl.com/translator#en/ja/${encodeURIComponent(selection).replaceAll("%2F", "\\%2F")}` // DeepLはスラッシュを特別扱いするためエスケープする。
     );
   }
 });
@@ -254,25 +236,17 @@ mapkey("<Alt-'>", "Google 翻訳", () => {
   const selection = window.getSelection().toString();
   if (selection === "") {
     // 文字列選択してない場合はページ自体を翻訳にかける
-    tabOpenLink(
-      `https://translate.google.com/translate?hl=&sl=auto&tl=ja&u=${window.location.href}&sandbox=1`
-    );
+    tabOpenLink(`https://translate.google.com/translate?hl=&sl=auto&tl=ja&u=${window.location.href}&sandbox=1`);
   } else {
     // 選択している場合はそれを翻訳する
-    tabOpenLink(
-      `https://translate.google.com/?sl=auto&tl=ja&text=${encodeURIComponent(
-        selection
-      )}`
-    );
+    tabOpenLink(`https://translate.google.com/?sl=auto&tl=ja&text=${encodeURIComponent(selection)}`);
   }
 });
 
 mapkey("<Ctrl-Alt-'>", "英辞郎 on the WEB Pro Lite", () => {
   const selection = window.getSelection().toString();
   if (selection !== "") {
-    tabOpenLink(
-      `https://eowf.alc.co.jp/search?q=${encodeURIComponent(selection)}`
-    );
+    tabOpenLink(`https://eowf.alc.co.jp/search?q=${encodeURIComponent(selection)}`);
   }
 });
 
@@ -280,18 +254,11 @@ mapkey("<Ctrl-;>", "はてなブックマーク", () => {
   const { location } = window;
   switch (location.protocol) {
     case "http:": {
-      tabOpenLink(
-        `https://b.hatena.ne.jp/entry/${location.href.replace("http://", "")}`
-      );
+      tabOpenLink(`https://b.hatena.ne.jp/entry/${location.href.replace("http://", "")}`);
       break;
     }
     case "https:": {
-      tabOpenLink(
-        `https://b.hatena.ne.jp/entry/s/${location.href.replace(
-          "https://",
-          ""
-        )}`
-      );
+      tabOpenLink(`https://b.hatena.ne.jp/entry/s/${location.href.replace("https://", "")}`);
       break;
     }
     default: {
@@ -322,8 +289,7 @@ function githubCommitInPullRequestTitle() {
   // GitHubによって勝手に長さによって省略されている。
   // しかし全体を取ると複数行全部取ることになる。
   // 最初の1行だけを取りたいが少しばかり複雑なロジックになりそうなので本格的に使いたくなるまで保留。
-  const commitMessagePart =
-    document.getElementsByClassName("commit-title")?.[0]?.innerText;
+  const commitMessagePart = document.getElementsByClassName("commit-title")?.[0]?.innerText;
   if (
     // タイトルが取れてなければおそらく対象のページではない。
     typeof commitMessagePart !== "string" ||
@@ -342,9 +308,7 @@ function githubCommitInPullRequestTitle() {
  * CodeCommitのタイトルはPRの内容を一切反映しない信じられない仕様。
  */
 function codeCommitPullRequestTitle() {
-  const prTitle = document.querySelector(
-    ".awsui-util-action-stripe-title-large h1"
-  )?.innerText;
+  const prTitle = document.querySelector(".awsui-util-action-stripe-title-large h1")?.innerText;
   if (typeof prTitle !== "string") {
     return undefined;
   }
@@ -376,12 +340,9 @@ function codeCommitPullRequestTitle() {
  */
 function backlogTitle() {
   // 課題のキー。プロジェクトタイトルがプレフィックスに付くので純粋な数値ではない。
-  const issueNumber =
-    document.getElementsByClassName("ticket__key-number")?.[0]?.innerText;
+  const issueNumber = document.getElementsByClassName("ticket__key-number")?.[0]?.innerText;
   // 課題に設定されたタイトル。
-  const issueTitle = document.getElementsByClassName(
-    "title-group__title-text"
-  )?.[0]?.innerText;
+  const issueTitle = document.getElementsByClassName("title-group__title-text")?.[0]?.innerText;
   // うまいこと取得できなかったら諦める。
   if (typeof issueNumber !== "string" || typeof issueTitle !== "string") {
     return undefined;
@@ -398,12 +359,7 @@ function backlogTitle() {
  * 特殊な状況でなければ`document.title`を利用する。
  */
 function dwimTitle() {
-  return (
-    githubCommitInPullRequestTitle() ||
-    codeCommitPullRequestTitle() ||
-    backlogTitle() ||
-    document.title
-  );
+  return githubCommitInPullRequestTitle() || codeCommitPullRequestTitle() || backlogTitle() || document.title;
 }
 
 mapkey("f", "#7Copy title and link to markdown without hash", () => {
@@ -433,8 +389,7 @@ async function getTwitterEmbed(url) {
   // TwitterのURLやツイートのURLじゃない場合は`undefined`を返す。
   if (
     !(
-      (url.hostname === "twitter.com" ||
-        url.hostname === "mobile.twitter.com") &&
+      (url.hostname === "twitter.com" || url.hostname === "mobile.twitter.com") &&
       /^\/\w+\/status\/\d+/.exec(url.pathname)
     )
   ) {
@@ -448,11 +403,7 @@ async function getTwitterEmbed(url) {
   publish.searchParams.set("lang", navigator.language || "en");
   const response = await fetch(publish.href);
   if (!response.ok) {
-    throw new Error(
-      `${publish.href}: response is not ok ${JSON.stringify(
-        response.statusText
-      )}`
-    );
+    throw new Error(`${publish.href}: response is not ok ${JSON.stringify(response.statusText)}`);
   }
   return (await response.json()).html;
 }
