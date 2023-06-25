@@ -8,7 +8,7 @@
     "fix:prettier": "yarn lint:prettier --write",
     "lint": "run-p --print-label lint:*",
     "lint:eslint": "eslint --ignore-path .gitignore --cache --ext .js .",
-    "lint:prettier": "prettier --ignore-path .gitignore --check **/*.js"
+    "lint:prettier": "prettier --ignore-path .gitignore --ignore-unknown --check '**/*.{js,jsx,ts,tsx,json,html,css,less,sass,scss,yml,yaml}'"
   },
   "devDependencies": {
     "eslint": "^8.33.0",
