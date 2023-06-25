@@ -250,7 +250,7 @@ mapkey("<Ctrl-Alt-'>", "英辞郎 on the WEB Pro Lite", () => {
   }
 });
 
-mapkey("<Ctrl-;>", "はてなブックマーク", () => {
+mapkey("<Ctrl-:>", "はてなブックマーク", () => {
   const { location } = window;
   switch (location.protocol) {
     case "http:": {
@@ -269,6 +269,10 @@ mapkey("<Ctrl-;>", "はてなブックマーク", () => {
 
 // open the Twitter
 
+mapkey("<Ctrl-;>", "ホーム / Twitter", () => {
+  tabOpenLink("https://twitter.com/home");
+});
+
 mapkey("<Alt-;>", "通知 / Twitter", () => {
   tabOpenLink("https://twitter.com/notifications");
 });
@@ -277,6 +281,10 @@ mapkey("<Ctrl-Alt-;>", "エゴサーチ / Yahoo!リアルタイム検索", () =>
   tabOpenLink(
     "https://search.yahoo.co.jp/realtime/search?p=-id%3Ancaq+(%40ncaq+ncaq+%E3%82%A8%E3%83%8C%E3%83%A6%E3%83%AB+%E3%81%88%E3%81%AC%E3%82%86%E3%82%8B+URL%3Atwitter.com%2Fncaq+URL%3Ancaq.net)"
   );
+});
+
+mapkey("<Ctrl-Alt-t>", "ツイートする / Twitter", () => {
+  tabOpenLink("https://twitter.com/compose/tweet");
 });
 
 // copy
