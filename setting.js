@@ -273,9 +273,9 @@ mapkey("<Alt-;>", "通知 / Twitter", () => {
   tabOpenLink("https://twitter.com/notifications");
 });
 
-mapkey("<Ctrl-Alt-;>", "エゴサーチ / Twitter", () => {
+mapkey("<Ctrl-Alt-;>", "エゴサーチ / Yahoo!リアルタイム検索", () => {
   tabOpenLink(
-    "https://twitter.com/search?q=%22ncaq%22%20OR%20%22%E3%82%A8%E3%83%8C%E3%83%A6%E3%83%AB%22%20OR%20%22%E3%81%88%E3%81%AC%E3%82%86%E3%82%8B%22%20OR%20twitter.com%2Fncaq%20-from%3Ancaq%20OR%20%40ncaq_do_not_exist&f=live"
+    "https://search.yahoo.co.jp/realtime/search?p=-id%3Ancaq+(%40ncaq+ncaq+%E3%82%A8%E3%83%8C%E3%83%A6%E3%83%AB+%E3%81%88%E3%81%AC%E3%82%86%E3%82%8B+URL%3Atwitter.com%2Fncaq+URL%3Ancaq.net)"
   );
 });
 
