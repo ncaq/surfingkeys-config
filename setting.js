@@ -283,10 +283,6 @@ mapkey("<Ctrl-Alt-;>", "エゴサーチ / Yahoo!リアルタイム検索", () =>
   );
 });
 
-mapkey("<Ctrl-Alt-t>", "ツイートする / Twitter", () => {
-  tabOpenLink("https://twitter.com/compose/tweet");
-});
-
 // copy
 
 /**
