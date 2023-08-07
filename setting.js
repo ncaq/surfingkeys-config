@@ -269,16 +269,36 @@ mapkey("<Ctrl-:>", "はてなブックマーク", () => {
 
 // open the Twitter
 
+/**
+ * 指定されたURLのタブが既に開かれていればそのタブをアクティブにします。
+ * 開かれていなければ新規に開きます。
+ */
+function tabActivateOrCreate(url) {
+  RUNTIME("getTabs", { queryInfo: { url, currentWindow: true } }, ({ tabs }) => {
+    if (!Array.isArray(tabs)) {
+      throw new Error(`tabs is not Array: ${JSON.stringify(tabs)}`);
+    }
+    const tabId = tabs?.[0]?.id;
+    // タブが存在すれば、そのタブをアクティブにします。
+    if (tabId != null) {
+      RUNTIME("focusTab", { tabId });
+    } else {
+      // タブが存在しなければ、新しくタブを開きます。
+      tabOpenLink(url);
+    }
+  });
+}
+
 mapkey("<Ctrl-;>", "ホーム / Twitter", () => {
-  tabOpenLink("https://twitter.com/home");
+  tabActivateOrCreate("https://twitter.com/home");
 });
 
 mapkey("<Alt-;>", "通知 / Twitter", () => {
-  tabOpenLink("https://twitter.com/notifications");
+  tabActivateOrCreate("https://twitter.com/notifications");
 });
 
 mapkey("<Ctrl-Alt-;>", "エゴサーチ / Yahoo!リアルタイム検索", () => {
-  tabOpenLink(
+  tabActivateOrCreate(
     "https://search.yahoo.co.jp/realtime/search?p=-id%3Ancaq+(%40ncaq+ncaq+%E3%82%A8%E3%83%8C%E3%83%A6%E3%83%AB+%E3%81%88%E3%81%AC%E3%82%86%E3%82%8B+URL%3Atwitter.com%2Fncaq+URL%3Ancaq.net)"
   );
 });
