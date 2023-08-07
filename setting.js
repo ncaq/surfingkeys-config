@@ -216,14 +216,14 @@ map("E", "D");
 
 // open with external service
 
-mapkey("'", "Google", () => {
+mapkey("'", "#3Google", () => {
   const selection = window.getSelection().toString();
   if (selection !== "") {
     tabOpenLink(`https://www.google.com/search?client=firefox-b-d&q=${encodeURIComponent(selection)}`);
   }
 });
 
-mapkey("<Ctrl-'>", "DeepL", () => {
+mapkey("<Ctrl-'>", "#3DeepL", () => {
   const selection = window.getSelection().toString();
   if (selection !== "") {
     tabOpenLink(
@@ -232,7 +232,7 @@ mapkey("<Ctrl-'>", "DeepL", () => {
   }
 });
 
-mapkey("<Alt-'>", "Google 翻訳", () => {
+mapkey("<Alt-'>", "#3Google 翻訳", () => {
   const selection = window.getSelection().toString();
   if (selection === "") {
     // 文字列選択してない場合はページ自体を翻訳にかける
@@ -243,14 +243,14 @@ mapkey("<Alt-'>", "Google 翻訳", () => {
   }
 });
 
-mapkey("<Ctrl-Alt-'>", "英辞郎 on the WEB Pro Lite", () => {
+mapkey("<Ctrl-Alt-'>", "#3英辞郎 on the WEB Pro Lite", () => {
   const selection = window.getSelection().toString();
   if (selection !== "") {
     tabOpenLink(`https://eowf.alc.co.jp/search?q=${encodeURIComponent(selection)}`);
   }
 });
 
-mapkey("<Ctrl-:>", "はてなブックマーク", () => {
+mapkey("<Ctrl-:>", "#3はてなブックマーク", () => {
   const { location } = window;
   switch (location.protocol) {
     case "http:": {
@@ -269,16 +269,36 @@ mapkey("<Ctrl-:>", "はてなブックマーク", () => {
 
 // open the Twitter
 
-mapkey("<Ctrl-;>", "ホーム / Twitter", () => {
-  tabOpenLink("https://twitter.com/home");
+/**
+ * 指定されたURLのタブが既に開かれていればそのタブをアクティブにします。
+ * 開かれていなければ新規に開きます。
+ */
+function tabActivateOrCreate(url) {
+  RUNTIME("getTabs", { queryInfo: { url, currentWindow: true } }, ({ tabs }) => {
+    if (!Array.isArray(tabs)) {
+      throw new Error(`tabs is not Array: ${JSON.stringify(tabs)}`);
+    }
+    const tabId = tabs?.[0]?.id;
+    // タブが存在すれば、そのタブをアクティブにします。
+    if (tabId != null) {
+      RUNTIME("focusTab", { tabId });
+    } else {
+      // タブが存在しなければ、新しくタブを開きます。
+      tabOpenLink(url);
+    }
+  });
+}
+
+mapkey("<Ctrl-;>", "#3XPro", () => {
+  tabActivateOrCreate("https://tweetdeck.twitter.com/");
 });
 
-mapkey("<Alt-;>", "通知 / Twitter", () => {
-  tabOpenLink("https://twitter.com/notifications");
+mapkey("<Alt-;>", "#3通知 / X", () => {
+  tabActivateOrCreate("https://twitter.com/notifications");
 });
 
-mapkey("<Ctrl-Alt-;>", "エゴサーチ / Yahoo!リアルタイム検索", () => {
-  tabOpenLink(
+mapkey("<Ctrl-Alt-;>", "#3エゴサーチ / Yahoo!リアルタイム検索", () => {
+  tabActivateOrCreate(
     "https://search.yahoo.co.jp/realtime/search?p=-id%3Ancaq+(%40ncaq+ncaq+%E3%82%A8%E3%83%8C%E3%83%A6%E3%83%AB+%E3%81%88%E3%81%AC%E3%82%86%E3%82%8B+URL%3Atwitter.com%2Fncaq+URL%3Ancaq.net)"
   );
 });
@@ -387,10 +407,10 @@ mapkey("L", "#7Copy title and link to human readable", () => {
 });
 
 /**
- * Twitterの埋め込みスクリプトを取得する。
+ * Twitterの埋め込みスクリプトをボタンを押さずに取得します。
  */
 async function getTwitterEmbed(url) {
-  // TwitterのURLやツイートのURLじゃない場合は`undefined`を返す。
+  // TwitterのURLやツイートのURLじゃない場合は`undefined`を返します。
   if (
     !(
       (url.hostname === "twitter.com" || url.hostname === "mobile.twitter.com") &&
@@ -401,9 +421,9 @@ async function getTwitterEmbed(url) {
   }
   const publish = new URL("https://publish.twitter.com/oembed");
   publish.searchParams.set("url", url.href);
-  // `script`タグは最後にまとめて入れるので取り除く。
+  // `script`タグは最後にまとめて入れるので取り除きます。
   publish.searchParams.set("omit_script", "t");
-  // ブラウザの言語設定を反映する。
+  // ブラウザの言語設定を反映します。
   publish.searchParams.set("lang", navigator.language || "en");
   const response = await fetch(publish.href);
   if (!response.ok) {
