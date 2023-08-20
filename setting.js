@@ -160,7 +160,7 @@ mapkey("d", "#3Outdent parent tab", () => {
   });
 });
 
-// リンク遷移。
+// Hints。
 
 const hintsCharactersRight = "htnsdcrbmwvz";
 const hintsCharactersLeft = "aoeui;qjkx";
@@ -203,6 +203,40 @@ mapkey("p", "#1Open a link in non-active new tab or click by left key", () => {
   Hints.setCharacters(hintsCharactersLeft);
   Hints.create("", Hints.dispatchMouseClick, { tabbed: true, active: false });
   Hints.setCharacters(hintsCharactersAll);
+});
+
+/**
+ * `getCssSelectorsOfEditable`とは違い、`checkbox`などキーボードで編集しないものには反応しません。
+ * この関数は、編集可能なテキストの要素を選択するためのCSSセレクタを返します。
+ */
+function getCssSelectorsOfEditableText() {
+  const inputTypes = [
+    "button",
+    "checkbox",
+    "color",
+    "date",
+    "datetime-local",
+    "file",
+    "image",
+    "radio",
+    "range",
+    "reset",
+    "submit",
+  ];
+  const excludedInputSelectors = inputTypes.map((type) => `input[type=${type}]`).join(", ");
+  const editableSelectors = [
+    `input:not(${excludedInputSelectors})`,
+    "textarea",
+    "*[contenteditable=true]",
+    "*[role=textbox]",
+    "select",
+    "div.ace_cursor",
+  ];
+  return editableSelectors.join(", ");
+}
+
+mapkey("i", "#1Go to edit text box", () => {
+  Hints.create(getCssSelectorsOfEditableText(), Hints.dispatchMouseClick);
 });
 
 // 戻る進む。
