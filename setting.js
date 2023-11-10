@@ -304,11 +304,13 @@ mapkey("<Ctrl-:>", "#3はてなブックマーク", () => {
 // open the Twitter
 
 /**
- * 指定されたURLのタブが既に開かれていればそのタブをアクティブにします。
- * 開かれていなければ新規に開きます。
+ * 指定されたURLのマッチパターンにヒットするタブが既に開かれていればそのタブをアクティブにする。
+ * 開かれていなければ新規に開く。
+ * 開く際には正確なURLが指定されていればそれを使用して、
+ * そうでなければマッチパターンをそのままURLと解釈して使用。
  */
-function tabActivateOrCreate(url) {
-  RUNTIME("getTabs", { queryInfo: { url, currentWindow: true } }, ({ tabs }) => {
+function tabActivateOrCreate(urlPattern, urlOpen = undefined) {
+  RUNTIME("getTabs", { queryInfo: { url: urlPattern, currentWindow: true } }, ({ tabs }) => {
     if (!Array.isArray(tabs)) {
       throw new Error(`tabs is not Array: ${JSON.stringify(tabs)}`);
     }
@@ -318,13 +320,13 @@ function tabActivateOrCreate(url) {
       RUNTIME("focusTab", { tabId });
     } else {
       // タブが存在しなければ、新しくタブを開きます。
-      tabOpenLink(url);
+      tabOpenLink(urlOpen ?? urlPattern);
     }
   });
 }
 
 mapkey("<Ctrl-;>", "#3XPro", () => {
-  tabActivateOrCreate("https://tweetdeck.twitter.com/");
+  tabActivateOrCreate("https://tweetdeck.twitter.com/*");
 });
 
 mapkey("<Alt-;>", "#3通知 / X", () => {
