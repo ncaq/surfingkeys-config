@@ -368,7 +368,7 @@ function githubCommitInPullRequestTitle() {
  * CodeCommitのタイトルはPRの内容を一切反映しない信じられない仕様。
  */
 function codeCommitPullRequestTitle() {
-  const prTitle = document.querySelector(".awsui-util-action-stripe-title-large h1")?.innerText;
+  const prTitle = document.querySelector('[class^="awsui_title"] h1')?.innerText;
   if (typeof prTitle !== "string") {
     return undefined;
   }
