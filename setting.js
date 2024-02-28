@@ -167,7 +167,7 @@ const hintsCharactersLeft = "aoeui;qjkx";
 const hintsCharactersAll = hintsCharactersRight + hintsCharactersLeft;
 
 Hints.charactersUpper = false;
-Hints.style("font-size: 16px !important;");
+Hints.style("font-size: 15px !important;");
 settings.hintAlign = "left";
 
 // キーボードでリンクを移動。
