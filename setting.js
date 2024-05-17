@@ -330,7 +330,7 @@ mapkey("<Ctrl-;>", "#3XPro", () => {
 });
 
 mapkey("<Alt-;>", "#3通知 / X", () => {
-  tabActivateOrCreate("https://twitter.com/notifications");
+  tabActivateOrCreate("https://x.com/notifications");
 });
 
 mapkey("<Ctrl-Alt-;>", "#3エゴサーチ / Yahoo!リアルタイム検索", () => {
@@ -449,7 +449,7 @@ async function getTwitterEmbed(url) {
   // TwitterのURLやツイートのURLじゃない場合は`undefined`を返します。
   if (
     !(
-      (url.hostname === "twitter.com" || url.hostname === "mobile.twitter.com") &&
+      (url.hostname === "twitter.com" || url.hostname === "mobile.twitter.com" || url.hostname === "x.com") &&
       /^\/\w+\/status\/\d+/.exec(url.pathname)
     )
   ) {
