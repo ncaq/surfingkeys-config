@@ -134,7 +134,7 @@ mapkey("<Ctrl-Alt-,>", "#8Open History", () => {
 const tstId = "treestyletab@piro.sakura.ne.jp";
 
 // 親のタブに移る
-mapkey("b", "#3Focus parent tab", async () => {
+mapkey("r", "#3Focus parent tab", async () => {
   const { id } = await browser.runtime.sendMessage(tstId, {
     type: "get-tree",
     tab: "current",
@@ -171,7 +171,7 @@ Hints.style("font-size: 14px !important;");
 settings.hintAlign = "left";
 
 // キーボードでリンクを移動。
-mapkey("x", "#1Open a link", () => {
+mapkey("b", "#1Open a link", () => {
   Hints.setCharacters(hintsCharactersAll);
   Hints.create("", Hints.dispatchMouseClick);
 });
