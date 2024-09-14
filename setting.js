@@ -121,6 +121,9 @@ mapkey("q", "#3Close current tab", () => {
   RUNTIME("closeTab");
 });
 
+// タブ一覧を表示して移動。
+map("x", "T");
+
 // 最近閉じたタブや履歴を閲覧。
 mapkey("<Alt-,>", "#8Open RecentlyClosed", () => {
   Front.openOmnibar({ type: "RecentlyClosed" });
