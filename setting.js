@@ -165,7 +165,7 @@ mapkey("d", "#3Outdent parent tab", () => {
 
 // Hints。
 
-const hintsCharactersRight = "htnscrbmwvz";
+const hintsCharactersRight = "htnsbmwvzcr";
 const hintsCharactersLeft = "ueoakjq;";
 const hintsCharactersAll = hintsCharactersRight + hintsCharactersLeft;
 
