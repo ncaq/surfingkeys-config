@@ -174,7 +174,7 @@ Hints.style("font-size: 14px !important;");
 settings.hintAlign = "left";
 
 // キーボードでリンクを移動。
-mapkey("b", "#1Open a link", () => {
+mapkey("m", "#1Open a link", () => {
   Hints.setCharacters(hintsCharactersAll);
   Hints.create("", Hints.dispatchMouseClick);
 });
@@ -184,7 +184,7 @@ mapkey("c", "#1Open a link in non-active new tab or click", () => {
   Hints.create("", Hints.dispatchMouseClick, { tabbed: true, active: false });
 });
 
-mapkey("m", "#1Open a link by right key", () => {
+mapkey("b", "#1Open a link by right key", () => {
   Hints.setCharacters(hintsCharactersRight);
   Hints.create("", Hints.dispatchMouseClick);
   Hints.setCharacters(hintsCharactersAll);
