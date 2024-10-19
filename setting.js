@@ -165,9 +165,9 @@ mapkey("g", "#3Outdent parent tab", () => {
 
 // Hints。
 
-const hintsCharactersRight = "crdhtnsbmwvz";
+const hintsCharactersRight = "dhtnsbmwvzcr";
 const hintsCharactersLeft = "iueoakjq;";
-const hintsCharactersAll = hintsCharactersRight + hintsCharactersLeft;
+const hintsCharactersAll = "crhtnsueoabmwvzkjq;";
 
 Hints.charactersUpper = false;
 Hints.style("font-size: 14px !important;");
