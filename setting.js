@@ -187,25 +187,21 @@ mapkey("c", "#1Open a link in non-active new tab or click", () => {
 mapkey("b", "#1Open a link by right key", () => {
   Hints.setCharacters(hintsCharactersRight);
   Hints.create("", Hints.dispatchMouseClick);
-  Hints.setCharacters(hintsCharactersAll);
 });
 
 mapkey("d", "#1Open a link in non-active new tab or click by right key", () => {
   Hints.setCharacters(hintsCharactersRight);
   Hints.create("", Hints.dispatchMouseClick, { tabbed: true, active: false });
-  Hints.setCharacters(hintsCharactersAll);
 });
 
 mapkey(";", "#1Open a link by left key", () => {
   Hints.setCharacters(hintsCharactersLeft);
   Hints.create("", Hints.dispatchMouseClick);
-  Hints.setCharacters(hintsCharactersAll);
 });
 
 mapkey("i", "#1Open a link in non-active new tab or click by left key", () => {
   Hints.setCharacters(hintsCharactersLeft);
   Hints.create("", Hints.dispatchMouseClick, { tabbed: true, active: false });
-  Hints.setCharacters(hintsCharactersAll);
 });
 
 /**
@@ -239,6 +235,7 @@ function getCssSelectorsOfEditableText() {
 }
 
 mapkey("p", "#1Go to edit text box", () => {
+  Hints.setCharacters(hintsCharactersAll);
   Hints.create(getCssSelectorsOfEditableText(), Hints.dispatchMouseClick);
 });
 
