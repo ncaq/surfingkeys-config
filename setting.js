@@ -326,7 +326,7 @@ function tabActivateOrCreate(urlPattern, urlOpen = undefined) {
 }
 
 mapkey("<Ctrl-;>", "#3XPro", () => {
-  tabActivateOrCreate("https://pro.twitter.com/*");
+  tabActivateOrCreate("https://pro.x.com/*");
 });
 
 mapkey("<Alt-;>", "#3通知 / X", () => {
