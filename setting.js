@@ -509,7 +509,7 @@ function disableSubmitWhereTextareaWhenEnter(event) {
 
 // コンテンツスクリプトを自由に実行する必要があるため、
 // imapのドメイン指定などでは表現しきれません。
-if (window.location.hostname === "chat.openai.com" || window.location.hostname === "chatgpt.com") {
+if (window.location.hostname === "claude.ai") {
   // textareaをquerySelectorAllする方法は読み込みタイミングの問題か使えませんでした。
   document.addEventListener("keydown", disableSubmitWhereTextareaWhenEnter, { capture: true });
 }
