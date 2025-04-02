@@ -484,32 +484,3 @@ mapkey("<Ctrl-=>", "#3zoom reset", () => {
     zoomFactor: 0,
   });
 });
-
-// 特定のアプリケーションで、Enterを改行に留めます。
-// 本当はC-mで改行でEnterで送信したいのですが、
-// OSレベルのアプリケーションでC-mとEnterを同一にしていると難しいです。
-// かなり強引な方法をとっていることは分かっているので、
-// 穏当な方法に修正したいです。
-
-/**
- * Enterが押された場合のイベント実行を停止します。
- * Ctrl+Enterの場合は停止しません。
- * 単純にimapで移し替えを行うことは出来なかったので強引な手法を使っています。
- */
-function disableSubmitWhereTextareaWhenEnter(event) {
-  if (
-    event instanceof KeyboardEvent &&
-    event.target.tagName === "TEXTAREA" &&
-    event.code === "Enter" &&
-    !event.ctrlKey
-  ) {
-    event.stopPropagation();
-  }
-}
-
-// コンテンツスクリプトを自由に実行する必要があるため、
-// imapのドメイン指定などでは表現しきれません。
-if (window.location.hostname === "chat.openai.com" || window.location.hostname === "chatgpt.com") {
-  // textareaをquerySelectorAllする方法は読み込みタイミングの問題か使えませんでした。
-  document.addEventListener("keydown", disableSubmitWhereTextareaWhenEnter, { capture: true });
-}
