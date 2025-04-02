@@ -496,7 +496,7 @@ mapkey("<Ctrl-=>", "#3zoom reset", () => {
  * OSレベルの上位レイヤーで行っています。
  * 単純にimapで移し替えを行うことは出来なかったので強引な手法を使っています。
  */
-function disableSubmitWhereTextareaWhenEnter(event) {
+function handleStopSubmitOnCtrlEnter(event) {
   console.log("Keydown detected", {
     target: event.target.tagName,
     code: event.code,
@@ -528,5 +528,5 @@ if (
     "you.com",
   ].includes(window.location.hostname)
 ) {
-  document.addEventListener("keydown", disableSubmitWhereTextareaWhenEnter, { capture: true });
+  document.addEventListener("keydown", handleStopSubmitOnCtrlEnter, { capture: true });
 }
