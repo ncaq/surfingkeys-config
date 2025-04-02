@@ -510,6 +510,8 @@ function disableSubmitWhereTextareaWhenEnter(event) {
   }
 }
 
+// 既知のチャット風サービスでのみEnter制御を行います。
+// 余計なサイトであまり侵入的にカスタムしたくないため。
 // コンテンツスクリプトを自由に実行する必要があるため、
 // imapのドメイン指定などでは表現しきれません。
 if (
