@@ -497,12 +497,19 @@ mapkey("<Ctrl-=>", "#3zoom reset", () => {
  * 単純にimapで移し替えを行うことは出来なかったので強引な手法を使っています。
  */
 function disableSubmitWhereTextareaWhenEnter(event) {
+  console.log("Keydown detected", {
+    target: event.target.tagName,
+    code: event.code,
+    ctrlKey: event.ctrlKey,
+  });
+
   if (
     event instanceof KeyboardEvent &&
     event.target.tagName === "TEXTAREA" &&
     event.code === "Enter" &&
     !event.ctrlKey
   ) {
+    console.log("条件一致！イベント停止を試みます");
     event.stopPropagation();
   }
 }
