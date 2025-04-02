@@ -485,15 +485,15 @@ mapkey("<Ctrl-=>", "#3zoom reset", () => {
   });
 });
 
-// 特定のアプリケーションで、Enterを改行に留めます。
-// 本当はC-mで改行でEnterで送信したいのですが、
-// OSレベルのアプリケーションでC-mとEnterを同一にしていると難しいです。
-// かなり強引な方法をとっていることは分かっているので、
-// 穏当な方法に修正したいです。
-
 /**
- * Enterが押された場合のイベント実行を停止します。
- * Ctrl+Enterの場合は停止しません。
+ * Ctrl+Enterが押された場合のイベント実行を停止します。
+ * Enter単体の場合は停止しません。
+ * これにより`C-m`を`Enter`に割り当てている環境で、
+ * `C-m`は単なる改行になり、`Enter`は送信になるように役割分担をします。
+ * 普段日本語入力の決定をしているのは`C-m`なので、
+ * それで送信しないようにすることで誤爆を防ぐことが出来ます。
+ * `C-m`の割り当て自体はxkeysanilやKeyhacなど、
+ * OSレベルの上位レイヤーで行っています。
  * 単純にimapで移し替えを行うことは出来なかったので強引な手法を使っています。
  */
 function disableSubmitWhereTextareaWhenEnter(event) {
@@ -503,12 +503,7 @@ function disableSubmitWhereTextareaWhenEnter(event) {
     ctrlKey: event.ctrlKey,
   });
 
-  if (
-    event instanceof KeyboardEvent &&
-    event.target.tagName === "TEXTAREA" &&
-    event.code === "Enter" &&
-    !event.ctrlKey
-  ) {
+  if (event instanceof KeyboardEvent && event.code === "Enter" && !event.ctrlKey) {
     console.log("条件一致！イベント停止を試みます");
     event.stopPropagation();
   }
@@ -516,7 +511,19 @@ function disableSubmitWhereTextareaWhenEnter(event) {
 
 // コンテンツスクリプトを自由に実行する必要があるため、
 // imapのドメイン指定などでは表現しきれません。
-if (window.location.hostname === "claude.ai") {
-  // textareaをquerySelectorAllする方法は読み込みタイミングの問題か使えませんでした。
+if (
+  [
+    "chat.mistral.ai",
+    "chatgpt.com",
+    "claude.ai",
+    "copilot.microsoft.com",
+    "dashboard.cohere.com",
+    "poe.com",
+    "www.chatpdf.com",
+    "www.perplexity.ai",
+    "www.phind.com",
+    "you.com",
+  ].includes(window.location.hostname)
+) {
   document.addEventListener("keydown", disableSubmitWhereTextareaWhenEnter, { capture: true });
 }
