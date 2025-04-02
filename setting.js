@@ -486,7 +486,7 @@ mapkey("<Ctrl-=>", "#3zoom reset", () => {
 });
 
 /**
- * `Enter`が押された場合のイベント実行を停止します。
+ * `Ctrl`なしで`Enter`が押された場合のイベント実行を停止して改行にします。
  * `Enter`は日本語変換の決定に頻繁に使うため、
  * よく誤爆してしまいます。
  * よって単に`Enter`を押しただけではイベントを実行せず、
@@ -497,10 +497,42 @@ mapkey("<Ctrl-=>", "#3zoom reset", () => {
  * `C-m`はwebブラウザからは`Ctrl`なしの`Enter`に見えてしまいます。
  * よって`Ctrl+Enter`で妥協しています。
  */
-function requireEventOnEnterWithCtrl(event) {
+function enterEventToNewlineWithoutCtrl(event) {
   if (event instanceof KeyboardEvent && event.code === "Enter" && !event.ctrlKey) {
+    // イベントを停止。
     event.preventDefault();
     event.stopPropagation();
+    // 改行を挿入。
+    if (event.target.getAttribute("contenteditable") === "true") {
+      // リッチテキストエディタの場合。
+      const selection = window.getSelection();
+      if (selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        const newLine = document.createTextNode("\n");
+        // 選択内容を削除。
+        range.deleteContents();
+        // 改行を挿入。
+        range.insertNode(newLine);
+        // カーソル位置を更新。
+        range.setStartAfter(newLine);
+        range.setEndAfter(newLine);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+    } else if (event.target.tagName === "TEXTAREA") {
+      // 標準テキストエリアの場合
+      const { selectionStart, selectionEnd, value } = event.target;
+      const newValue = `${value.substring(0, selectionStart)}\n${value.substring(selectionEnd)}`;
+      // イミュータブルに処理するために新しい値を設定
+      const textarea = event.target;
+      textarea.value = newValue;
+      // カーソル位置を更新
+      const newPosition = selectionStart + 1;
+      setTimeout(() => {
+        textarea.selectionStart = newPosition;
+        textarea.selectionEnd = newPosition;
+      }, 0);
+    }
   }
 }
 
@@ -522,5 +554,5 @@ if (
     "you.com",
   ].includes(window.location.hostname)
 ) {
-  document.addEventListener("keydown", requireEventOnEnterWithCtrl, { capture: true });
+  document.addEventListener("keydown", enterEventToNewlineWithoutCtrl, { capture: true });
 }
