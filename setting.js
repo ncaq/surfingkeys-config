@@ -505,6 +505,7 @@ function disableSubmitWhereTextareaWhenEnter(event) {
 
   if (event instanceof KeyboardEvent && event.code === "Enter" && !event.ctrlKey) {
     console.log("条件一致！イベント停止を試みます");
+    event.preventDefault();
     event.stopPropagation();
   }
 }
