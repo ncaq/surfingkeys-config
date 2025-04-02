@@ -508,16 +508,12 @@ function enterEventToNewlineWithoutCtrl(event) {
       const selection = window.getSelection();
       if (selection.rangeCount > 0) {
         const range = selection.getRangeAt(0);
-        const newLine = document.createTextNode("\n");
-        // 選択内容を削除。
-        range.deleteContents();
+        const br = document.createElement("br");
         // 改行を挿入。
-        range.insertNode(newLine);
+        range.insertNode(br);
         // カーソル位置を更新。
-        range.setStartAfter(newLine);
-        range.setEndAfter(newLine);
-        selection.removeAllRanges();
-        selection.addRange(range);
+        range.setStartAfter(br);
+        range.setEndAfter(br);
       }
     } else if (event.target.tagName === "TEXTAREA") {
       // 標準テキストエリアの場合
