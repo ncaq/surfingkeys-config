@@ -486,25 +486,19 @@ mapkey("<Ctrl-=>", "#3zoom reset", () => {
 });
 
 /**
- * Ctrl+Enterが押された場合のイベント実行を停止します。
- * Enter単体の場合は停止しません。
- * これにより`C-m`を`Enter`に割り当てている環境で、
- * `C-m`は単なる改行になり、`Enter`は送信になるように役割分担をします。
- * 普段日本語入力の決定をしているのは`C-m`なので、
- * それで送信しないようにすることで誤爆を防ぐことが出来ます。
- * `C-m`の割り当て自体はxkeysanilやKeyhacなど、
- * OSレベルの上位レイヤーで行っています。
- * 単純にimapで移し替えを行うことは出来なかったので強引な手法を使っています。
+ * `Enter`が押された場合のイベント実行を停止します。
+ * `Enter`は日本語変換の決定に頻繁に使うため、
+ * よく誤爆してしまいます。
+ * よって単に`Enter`を押しただけではイベントを実行せず、
+ * `Ctrl+Enter`を要求します。
+ * 本当は`C-m`(`Ctrl+m`)を日本語変換の確定や改行にして、
+ * `Enter`を送信に割り当てたいのですが、
+ * xkeysnailやKeyhacなどで`C-m`を`Enter`に割り当てると、
+ * `C-m`はwebブラウザからは`Ctrl`なしの`Enter`に見えてしまいます。
+ * よって`Ctrl+Enter`で妥協しています。
  */
-function handleStopSubmitOnCtrlEnter(event) {
-  console.log("Keydown detected", {
-    target: event.target.tagName,
-    code: event.code,
-    ctrlKey: event.ctrlKey,
-  });
-
+function requireEventOnEnterWithCtrl(event) {
   if (event instanceof KeyboardEvent && event.code === "Enter" && !event.ctrlKey) {
-    console.log("条件一致！イベント停止を試みます");
     event.preventDefault();
     event.stopPropagation();
   }
@@ -528,5 +522,5 @@ if (
     "you.com",
   ].includes(window.location.hostname)
 ) {
-  document.addEventListener("keydown", handleStopSubmitOnCtrlEnter, { capture: true });
+  document.addEventListener("keydown", requireEventOnEnterWithCtrl, { capture: true });
 }
