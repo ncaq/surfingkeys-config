@@ -11,7 +11,7 @@
     "lint:prettier": "prettier --ignore-path .gitignore --ignore-unknown --check '**/*.{js,jsx,ts,tsx,json,html,css,less,sass,scss,yml,yaml}'"
   },
   "devDependencies": {
-    "eslint": "^8.33.0",
+    "eslint": "^10.0.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-import": "^2.27.5",
