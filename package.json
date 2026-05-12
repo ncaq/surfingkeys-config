@@ -1,22 +1,35 @@
 {
   "name": "surfingkeys-config",
+  "version": "0.0.0",
+  "private": true,
   "license": "MIT",
-  "author": "ncaq <ncaq@ncaq.net>",
+  "type": "module",
   "scripts": {
-    "fix": "run-p --print-label 'fix:*'",
-    "fix:eslint": "yarn lint:eslint --fix",
-    "fix:prettier": "yarn lint:prettier --write",
-    "lint": "run-p --print-label 'lint:*'",
-    "lint:eslint": "eslint --ignore-path .gitignore --cache --ext .js .",
-    "lint:prettier": "prettier --ignore-path .gitignore --ignore-unknown --check '**/*.{js,jsx,ts,tsx,json,html,css,less,sass,scss,yml,yaml}'"
+    "fix": "run-p fix:*",
+    "fix:eslint": "eslint --fix .",
+    "fix:prettier": "prettier --write .",
+    "lint": "run-p lint:*",
+    "lint:eslint": "eslint .",
+    "lint:prettier": "prettier --check .",
+    "lint:tsc": "tsc --noEmit"
   },
   "devDependencies": {
-    "eslint": "^8.33.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^8.6.0",
-    "eslint-plugin-import": "^2.27.5",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^2.8.4"
+    "@eslint/compat": "2.0.5",
+    "@eslint/js": "10.0.1",
+    "@types/node": "22.19.17",
+    "eslint": "10.3.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-import-resolver-typescript": "4.4.4",
+    "eslint-plugin-import-x": "4.16.2",
+    "eslint-plugin-n": "17.24.0",
+    "globals": "17.6.0",
+    "jiti": "2.6.1",
+    "npm-run-all2": "8.0.4",
+    "prettier": "3.8.3",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.59.2"
   },
-  "packageManager": "yarn@4.12.0"
+  "engines": {
+    "node": ">=22"
+  }
 }
