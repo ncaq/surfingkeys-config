@@ -259,7 +259,8 @@ mapkey("<Ctrl-'>", "#3DeepL", () => {
   const selection = window.getSelection().toString();
   if (selection !== "") {
     tabOpenLink(
-      `https://www.deepl.com/translator#en/ja/${encodeURIComponent(selection).replaceAll("%2F", "\\%2F")}`, // DeepLはスラッシュを特別扱いするためエスケープする。
+      // DeepLはスラッシュを特別扱いするためエスケープする。
+      `https://www.deepl.com/translator#en/ja/${encodeURIComponent(selection).replaceAll("%2F", "\\%2F")}`,
     );
   }
 });
@@ -358,7 +359,8 @@ function githubCommitInPullRequestTitle() {
     // PRのページっぽいか?
     !document.location.pathname.split("/").includes("pull") ||
     // コミット単独のページだと既にタイトルに含まれているので追記しない。
-    // タイトルに含まれているか判定はGitHubが`code`をバッククオートでマークアップしたタイトルにするのであまり信用できない。
+    // タイトルに含まれているか判定は、
+    // GitHubが`code`をバッククオートでマークアップしたタイトルにするのであまり信用できない。
     document.title.includes(commitMessagePart)
   ) {
     return undefined;
