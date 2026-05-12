@@ -3,12 +3,15 @@
  * @copyright ncaq
  * @license MIT
  *
- * This configuration is partly based on https://github.com/brookhong/Surfingkeys default settings.
+ * This configuration is partly based on
+ * https://github.com/brookhong/Surfingkeys default settings.
+ *
  * Surfingkeys is MIT licensed.
  * Copyright (c) 2015 brookhong
  */
 
-// `Clipboard`はDOMの組み込みグローバル名と衝突するのでdestructureせずに`api.Clipboard`経由で参照する。
+// `Clipboard`はDOMの組み込みグローバル名と衝突するので、
+// destructureせずに`api.Clipboard`経由で参照する。
 const { Front, Hints, RUNTIME, iunmap, map, mapkey, tabOpenLink, unmap } = api;
 
 // 無効化。
@@ -119,10 +122,11 @@ mapkey("q", "#3Close current tab", () => {
 // タブ一覧を表示して移動。
 map("x", "T");
 
-// 最近閉じたタブや履歴を閲覧。
+// 最近閉じたタブを表示して移動。
 mapkey("<Alt-,>", "#8Open RecentlyClosed", () => {
   Front.openOmnibar({ type: "RecentlyClosed" });
 });
+// 最近の履歴を表示して移動。
 mapkey("<Ctrl-Alt-,>", "#8Open History", () => {
   Front.openOmnibar({ type: "History" });
 });
@@ -132,24 +136,34 @@ mapkey("<Ctrl-Alt-,>", "#8Open History", () => {
 const tstId = "treestyletab@piro.sakura.ne.jp";
 
 /**
- * @typedef {{ id: number; children: TstTab[] }} TstTab
+ * Tree Style Tabsのタブを1つ取得します。
+ * @param {string} tab
+ * @return {Promise<TstTab>}
  */
+function getTreeTab(tab) {
+  return browser.runtime.sendMessage(tstId, {
+    type: "get-tree",
+    tab,
+  });
+}
 
-// 親のタブに移る
+/**
+ * Tree Style Tabsのタブを複数取得します。
+ * @param {string} tabs
+ * @return {Promise<TstTab[]>}
+ */
+function getTreeTabs(tabs) {
+  return browser.runtime.sendMessage(tstId, {
+    type: "get-tree",
+    tabs,
+  });
+}
+
+// 親のタブに移る。
 mapkey("r", "#3Focus parent tab", async () => {
-  const { id } = /** @type {TstTab} */ (
-    await browser.runtime.sendMessage(tstId, {
-      type: "get-tree",
-      tab: "current",
-    })
-  );
-  const tabs = /** @type {TstTab[]} */ (
-    await browser.runtime.sendMessage(tstId, {
-      type: "get-tree",
-      tabs: "*",
-    })
-  );
-  const parentTab = tabs.find((tab) => tab.children.find((child) => child.id === id));
+  const { id } = await getTreeTab("current");
+  const tabs = await getTreeTabs("*");
+  const parentTab = tabs.find((tab) => tab.children.some((child) => child.id === id));
   if (parentTab) {
     browser.runtime.sendMessage(tstId, {
       type: "focus",
@@ -158,7 +172,7 @@ mapkey("r", "#3Focus parent tab", async () => {
   }
 });
 
-// タブを1段階上昇させる
+// タブを1段階上昇させる。
 mapkey("g", "#3Outdent parent tab", () => {
   browser.runtime.sendMessage(tstId, {
     type: "outdent",

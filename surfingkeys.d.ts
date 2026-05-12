@@ -48,6 +48,17 @@ declare const settings: {
 // このプロジェクトでは利用箇所が限定的なので最小限の型のみ宣言する。
 declare const browser: {
   runtime: {
-    sendMessage(extensionId: string, message: unknown): Promise<unknown>;
+    sendMessage<Message = unknown, Response = unknown>(
+      extensionId: string,
+      message: Message,
+    ): Promise<Response>;
   };
 };
+
+// Tree Style TabのAPI。
+// 厳密にはSurfingkeysの一部ではありませんが、
+// この設定ファイルで利用するために書いておきます。
+interface TstTab {
+  id: number;
+  children: TstTab[];
+}
