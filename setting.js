@@ -258,10 +258,10 @@ mapkey("'", "#3Google", () => {
 mapkey("<Ctrl-'>", "#3DeepL", () => {
   const selection = window.getSelection().toString();
   if (selection !== "") {
-    tabOpenLink(
-      // DeepLはスラッシュを特別扱いするためエスケープする。
-      `https://www.deepl.com/translator#en/ja/${encodeURIComponent(selection).replaceAll("%2F", "\\%2F")}`,
-    );
+    const url = new URL("https://www.deepl.com/translator");
+    // DeepLはスラッシュを特別扱いするためエスケープする。
+    url.hash = `en/ja/${encodeURIComponent(selection).replaceAll("%2F", "\\%2F")}`;
+    tabOpenLink(url.toString());
   }
 });
 
@@ -269,14 +269,20 @@ mapkey("<Alt-'>", "#3Google 翻訳", () => {
   const selection = window.getSelection().toString();
   if (selection === "") {
     // 文字列選択してない場合はページ自体を翻訳にかける
-    tabOpenLink(
-      `https://translate.google.com/translate?hl=&sl=auto&tl=ja&u=${window.location.href}&sandbox=1`,
-    );
+    const url = new URL("https://translate.google.com/translate");
+    url.searchParams.set("hl", "");
+    url.searchParams.set("sl", "auto");
+    url.searchParams.set("tl", "ja");
+    url.searchParams.set("u", window.location.href);
+    url.searchParams.set("sandbox", "1");
+    tabOpenLink(url.toString());
   } else {
     // 選択している場合はそれを翻訳する
-    tabOpenLink(
-      `https://translate.google.com/?sl=auto&tl=ja&text=${encodeURIComponent(selection)}`,
-    );
+    const url = new URL("https://translate.google.com/");
+    url.searchParams.set("sl", "auto");
+    url.searchParams.set("tl", "ja");
+    url.searchParams.set("text", selection);
+    tabOpenLink(url.toString());
   }
 });
 
@@ -337,9 +343,12 @@ mapkey("<Alt-;>", "#3通知 / X", () => {
 });
 
 mapkey("<Ctrl-Alt-;>", "#3エゴサーチ / Yahoo!リアルタイム検索", () => {
-  tabActivateOrCreate(
-    "https://search.yahoo.co.jp/realtime/search?p=-id%3Ancaq+(%40ncaq+ncaq+%E3%82%A8%E3%83%8C%E3%83%A6%E3%83%AB+%E3%81%88%E3%81%AC%E3%82%86%E3%82%8B+URL%3Atwitter.com%2Fncaq+URL%3Ancaq.net)",
+  const url = new URL("https://search.yahoo.co.jp/realtime/search");
+  url.searchParams.set(
+    "p",
+    "-id:ncaq (@ncaq ncaq エヌユル えぬゆる URL:twitter.com/ncaq URL:ncaq.net)",
   );
+  tabActivateOrCreate(url.toString());
 });
 
 // copy
