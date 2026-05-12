@@ -122,10 +122,11 @@ mapkey("q", "#3Close current tab", () => {
 // タブ一覧を表示して移動。
 map("x", "T");
 
-// 最近閉じたタブや履歴を閲覧。
+// 最近閉じたタブを表示して移動。
 mapkey("<Alt-,>", "#8Open RecentlyClosed", () => {
   Front.openOmnibar({ type: "RecentlyClosed" });
 });
+// 最近の履歴を表示して移動。
 mapkey("<Ctrl-Alt-,>", "#8Open History", () => {
   Front.openOmnibar({ type: "History" });
 });
