@@ -276,7 +276,7 @@ mapkey("'", "#3Google", () => {
   }
 });
 
-mapkey("<Ctrl-'>", "#3DeepL", () => {
+mapkey("<Alt-'>", "#3DeepL", () => {
   const selection = window.getSelection()?.toString() ?? "";
   if (selection !== "") {
     const url = new URL("https://www.deepl.com/translator");
@@ -286,7 +286,7 @@ mapkey("<Ctrl-'>", "#3DeepL", () => {
   }
 });
 
-mapkey("<Alt-'>", "#3Google 翻訳", () => {
+mapkey("<Ctrl-'>", "#3Google 翻訳", () => {
   const selection = window.getSelection()?.toString() ?? "";
   if (selection === "") {
     // 文字列選択してない場合はページ自体を翻訳にかける
@@ -357,11 +357,7 @@ function tabActivateOrCreate(urlPattern, urlOpen = undefined) {
   });
 }
 
-mapkey("<Ctrl-;>", "#3XPro", () => {
-  tabActivateOrCreate("https://pro.x.com/*");
-});
-
-mapkey("<Alt-;>", "#3通知 / X", () => {
+mapkey("<Ctrl-;>", "#3通知 / X", () => {
   tabActivateOrCreate("https://x.com/notifications");
 });
 
