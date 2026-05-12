@@ -8,11 +8,7 @@
  * Copyright (c) 2015 brookhong
  */
 
-/*
-   global
-   api
-   settings
- */
+// @ts-check
 
 const { Clipboard, Front, Hints, RUNTIME, iunmap, map, mapkey, tabOpenLink, unmap } = api;
 
