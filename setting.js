@@ -8,8 +8,6 @@
  * Copyright (c) 2015 brookhong
  */
 
-// @ts-check
-
 const { Clipboard, Front, Hints, RUNTIME, iunmap, map, mapkey, tabOpenLink, unmap } = api;
 
 // 無効化。
