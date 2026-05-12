@@ -3,12 +3,15 @@
  * @copyright ncaq
  * @license MIT
  *
- * This configuration is partly based on https://github.com/brookhong/Surfingkeys default settings.
+ * This configuration is partly based on
+ * https://github.com/brookhong/Surfingkeys default settings.
+ *
  * Surfingkeys is MIT licensed.
  * Copyright (c) 2015 brookhong
  */
 
-// `Clipboard`はDOMの組み込みグローバル名と衝突するのでdestructureせずに`api.Clipboard`経由で参照する。
+// `Clipboard`はDOMの組み込みグローバル名と衝突するので、
+// destructureせずに`api.Clipboard`経由で参照する。
 const { Front, Hints, RUNTIME, iunmap, map, mapkey, tabOpenLink, unmap } = api;
 
 // 無効化。
