@@ -139,7 +139,7 @@ const tstId = "treestyletab@piro.sakura.ne.jp";
  * @typedef {{ id: number; children: TstTab[] }} TstTab
  */
 
-// 親のタブに移る
+// 親のタブに移る。
 mapkey("r", "#3Focus parent tab", async () => {
   const { id } = /** @type {TstTab} */ (
     await browser.runtime.sendMessage(tstId, {
@@ -162,7 +162,7 @@ mapkey("r", "#3Focus parent tab", async () => {
   }
 });
 
-// タブを1段階上昇させる
+// タブを1段階上昇させる。
 mapkey("g", "#3Outdent parent tab", () => {
   browser.runtime.sendMessage(tstId, {
     type: "outdent",
