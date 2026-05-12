@@ -136,23 +136,33 @@ mapkey("<Ctrl-Alt-,>", "#8Open History", () => {
 const tstId = "treestyletab@piro.sakura.ne.jp";
 
 /**
- * @typedef {{ id: number; children: TstTab[] }} TstTab
+ * Tree Style Tabsのタブを1つ取得します。
+ * @param {string} tab
+ * @return {Promise<TstTab>}
  */
+function getTreeTab(tab) {
+  return browser.runtime.sendMessage(tstId, {
+    type: "get-tree",
+    tab,
+  });
+}
+
+/**
+ * Tree Style Tabsのタブを複数取得します。
+ * @param {string} tabs
+ * @return {Promise<TstTab[]>}
+ */
+function getTreeTabs(tabs) {
+  return browser.runtime.sendMessage(tstId, {
+    type: "get-tree",
+    tabs,
+  });
+}
 
 // 親のタブに移る。
 mapkey("r", "#3Focus parent tab", async () => {
-  const { id } = /** @type {TstTab} */ (
-    await browser.runtime.sendMessage(tstId, {
-      type: "get-tree",
-      tab: "current",
-    })
-  );
-  const tabs = /** @type {TstTab[]} */ (
-    await browser.runtime.sendMessage(tstId, {
-      type: "get-tree",
-      tabs: "*",
-    })
-  );
+  const { id } = await getTreeTab("current");
+  const tabs = await getTreeTabs("*");
   const parentTab = tabs.find((tab) => tab.children.find((child) => child.id === id));
   if (parentTab) {
     browser.runtime.sendMessage(tstId, {
