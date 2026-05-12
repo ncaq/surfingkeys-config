@@ -48,7 +48,10 @@ declare const settings: {
 // このプロジェクトでは利用箇所が限定的なので最小限の型のみ宣言する。
 declare const browser: {
   runtime: {
-    sendMessage(extensionId: string, message: T): Promise<U>;
+    sendMessage<Message = unknown, Response = unknown>(
+      extensionId: string,
+      message: Message,
+    ): Promise<Response>;
   };
 };
 
