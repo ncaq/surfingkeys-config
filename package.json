@@ -23,7 +23,7 @@
     "eslint-plugin-import-x": "4.16.2",
     "eslint-plugin-n": "17.24.0",
     "globals": "17.6.0",
-    "jiti": "2.6.1",
+    "jiti": "2.7.0",
     "npm-run-all2": "8.0.4",
     "prettier": "3.8.3",
     "typescript": "6.0.3",
