@@ -163,7 +163,7 @@ function getTreeTabs(tabs) {
 mapkey("r", "#3Focus parent tab", async () => {
   const { id } = await getTreeTab("current");
   const tabs = await getTreeTabs("*");
-  const parentTab = tabs.find((tab) => tab.children.find((child) => child.id === id));
+  const parentTab = tabs.find((tab) => tab.children.some((child) => child.id === id));
   if (parentTab) {
     browser.runtime.sendMessage(tstId, {
       type: "focus",
