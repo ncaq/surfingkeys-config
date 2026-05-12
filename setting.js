@@ -253,7 +253,9 @@ map("E", "D");
 mapkey("'", "#3Google", () => {
   const selection = window.getSelection().toString();
   if (selection !== "") {
-    tabOpenLink(`https://www.google.com/search?client=firefox-b-d&q=${encodeURIComponent(selection)}`);
+    tabOpenLink(
+      `https://www.google.com/search?client=firefox-b-d&q=${encodeURIComponent(selection)}`,
+    );
   }
 });
 
@@ -261,7 +263,7 @@ mapkey("<Ctrl-'>", "#3DeepL", () => {
   const selection = window.getSelection().toString();
   if (selection !== "") {
     tabOpenLink(
-      `https://www.deepl.com/translator#en/ja/${encodeURIComponent(selection).replaceAll("%2F", "\\%2F")}` // DeepLはスラッシュを特別扱いするためエスケープする。
+      `https://www.deepl.com/translator#en/ja/${encodeURIComponent(selection).replaceAll("%2F", "\\%2F")}`, // DeepLはスラッシュを特別扱いするためエスケープする。
     );
   }
 });
@@ -270,10 +272,14 @@ mapkey("<Alt-'>", "#3Google 翻訳", () => {
   const selection = window.getSelection().toString();
   if (selection === "") {
     // 文字列選択してない場合はページ自体を翻訳にかける
-    tabOpenLink(`https://translate.google.com/translate?hl=&sl=auto&tl=ja&u=${window.location.href}&sandbox=1`);
+    tabOpenLink(
+      `https://translate.google.com/translate?hl=&sl=auto&tl=ja&u=${window.location.href}&sandbox=1`,
+    );
   } else {
     // 選択している場合はそれを翻訳する
-    tabOpenLink(`https://translate.google.com/?sl=auto&tl=ja&text=${encodeURIComponent(selection)}`);
+    tabOpenLink(
+      `https://translate.google.com/?sl=auto&tl=ja&text=${encodeURIComponent(selection)}`,
+    );
   }
 });
 
@@ -335,7 +341,7 @@ mapkey("<Alt-;>", "#3通知 / X", () => {
 
 mapkey("<Ctrl-Alt-;>", "#3エゴサーチ / Yahoo!リアルタイム検索", () => {
   tabActivateOrCreate(
-    "https://search.yahoo.co.jp/realtime/search?p=-id%3Ancaq+(%40ncaq+ncaq+%E3%82%A8%E3%83%8C%E3%83%A6%E3%83%AB+%E3%81%88%E3%81%AC%E3%82%86%E3%82%8B+URL%3Atwitter.com%2Fncaq+URL%3Ancaq.net)"
+    "https://search.yahoo.co.jp/realtime/search?p=-id%3Ancaq+(%40ncaq+ncaq+%E3%82%A8%E3%83%8C%E3%83%A6%E3%83%AB+%E3%81%88%E3%81%AC%E3%82%86%E3%82%8B+URL%3Atwitter.com%2Fncaq+URL%3Ancaq.net)",
   );
 });
 
@@ -419,7 +425,12 @@ function backlogTitle() {
  * 特殊な状況でなければ`document.title`を利用する。
  */
 function dwimTitle() {
-  return githubCommitInPullRequestTitle() || codeCommitPullRequestTitle() || backlogTitle() || document.title;
+  return (
+    githubCommitInPullRequestTitle() ||
+    codeCommitPullRequestTitle() ||
+    backlogTitle() ||
+    document.title
+  );
 }
 
 mapkey("f", "#7Copy title and link to markdown without hash", () => {
@@ -449,7 +460,9 @@ async function getTwitterEmbed(url) {
   // TwitterのURLやツイートのURLじゃない場合は`undefined`を返します。
   if (
     !(
-      (url.hostname === "twitter.com" || url.hostname === "mobile.twitter.com" || url.hostname === "x.com") &&
+      (url.hostname === "twitter.com" ||
+        url.hostname === "mobile.twitter.com" ||
+        url.hostname === "x.com") &&
       /^\/\w+\/status\/\d+/.exec(url.pathname)
     )
   ) {
