@@ -8,7 +8,8 @@
  * Copyright (c) 2015 brookhong
  */
 
-const { Clipboard, Front, Hints, RUNTIME, iunmap, map, mapkey, tabOpenLink, unmap } = api;
+// `Clipboard`はDOMの組み込みグローバル名と衝突するのでdestructureせずに`api.Clipboard`経由で参照する。
+const { Front, Hints, RUNTIME, iunmap, map, mapkey, tabOpenLink, unmap } = api;
 
 // 無効化。
 
@@ -130,16 +131,24 @@ mapkey("<Ctrl-Alt-,>", "#8Open History", () => {
 
 const tstId = "treestyletab@piro.sakura.ne.jp";
 
+/**
+ * @typedef {{ id: number; children: TstTab[] }} TstTab
+ */
+
 // 親のタブに移る
 mapkey("r", "#3Focus parent tab", async () => {
-  const { id } = await browser.runtime.sendMessage(tstId, {
-    type: "get-tree",
-    tab: "current",
-  });
-  const tabs = await browser.runtime.sendMessage(tstId, {
-    type: "get-tree",
-    tabs: "*",
-  });
+  const { id } = /** @type {TstTab} */ (
+    await browser.runtime.sendMessage(tstId, {
+      type: "get-tree",
+      tab: "current",
+    })
+  );
+  const tabs = /** @type {TstTab[]} */ (
+    await browser.runtime.sendMessage(tstId, {
+      type: "get-tree",
+      tabs: "*",
+    })
+  );
   const parentTab = tabs.find((tab) => tab.children.find((child) => child.id === id));
   if (parentTab) {
     browser.runtime.sendMessage(tstId, {
@@ -245,7 +254,7 @@ map("E", "D");
 // open with external service
 
 mapkey("'", "#3Google", () => {
-  const selection = window.getSelection().toString();
+  const selection = window.getSelection()?.toString() ?? "";
   if (selection !== "") {
     tabOpenLink(
       `https://www.google.com/search?client=firefox-b-d&q=${encodeURIComponent(selection)}`,
@@ -254,7 +263,7 @@ mapkey("'", "#3Google", () => {
 });
 
 mapkey("<Ctrl-'>", "#3DeepL", () => {
-  const selection = window.getSelection().toString();
+  const selection = window.getSelection()?.toString() ?? "";
   if (selection !== "") {
     const url = new URL("https://www.deepl.com/translator");
     // DeepLはスラッシュを特別扱いするためエスケープする。
@@ -264,7 +273,7 @@ mapkey("<Ctrl-'>", "#3DeepL", () => {
 });
 
 mapkey("<Alt-'>", "#3Google 翻訳", () => {
-  const selection = window.getSelection().toString();
+  const selection = window.getSelection()?.toString() ?? "";
   if (selection === "") {
     // 文字列選択してない場合はページ自体を翻訳にかける
     const url = new URL("https://translate.google.com/translate");
@@ -285,7 +294,7 @@ mapkey("<Alt-'>", "#3Google 翻訳", () => {
 });
 
 mapkey("<Ctrl-Alt-'>", "#3英辞郎 on the WEB Pro Lite", () => {
-  const selection = window.getSelection().toString();
+  const selection = window.getSelection()?.toString() ?? "";
   if (selection !== "") {
     tabOpenLink(`https://eowf.alc.co.jp/search?q=${encodeURIComponent(selection)}`);
   }
@@ -315,6 +324,8 @@ mapkey("<Ctrl-:>", "#3はてなブックマーク", () => {
  * 開かれていなければ新規に開く。
  * 開く際には正確なURLが指定されていればそれを使用して、
  * そうでなければマッチパターンをそのままURLと解釈して使用。
+ * @param {string} urlPattern
+ * @param {string} [urlOpen]
  */
 function tabActivateOrCreate(urlPattern, urlOpen = undefined) {
   RUNTIME("getTabs", { queryInfo: { url: urlPattern, currentWindow: true } }, ({ tabs }) => {
@@ -352,6 +363,18 @@ mapkey("<Ctrl-Alt-;>", "#3エゴサーチ / Yahoo!リアルタイム検索", () 
 // copy
 
 /**
+ * 指定したクラス名にマッチする最初の要素の`innerText`を返します。
+ * 要素が見つからない場合や`HTMLElement`でない場合は`undefined`を返します。
+ * `innerText`は`HTMLElement`にしか存在しないため型ガードを通します。
+ * @param {string} className
+ * @returns {string | undefined}
+ */
+function firstInnerTextByClassName(className) {
+  const element = document.getElementsByClassName(className)[0];
+  return element instanceof HTMLElement ? element.innerText : undefined;
+}
+
+/**
  * GitHubのPull Requestから開いたCommitのページのタイトルが、
  * コミットメッセージを一切含まないのを修正。
  */
@@ -359,7 +382,7 @@ function githubCommitInPullRequestTitle() {
   // GitHubによって勝手に長さによって省略されている。
   // しかし全体を取ると複数行全部取ることになる。
   // 最初の1行だけを取りたいが少しばかり複雑なロジックになりそうなので本格的に使いたくなるまで保留。
-  const commitMessagePart = document.getElementsByClassName("commit-title")?.[0]?.innerText;
+  const commitMessagePart = firstInnerTextByClassName("commit-title");
   if (
     // タイトルが取れてなければおそらく対象のページではない。
     typeof commitMessagePart !== "string" ||
@@ -379,7 +402,8 @@ function githubCommitInPullRequestTitle() {
  * CodeCommitのタイトルはPRの内容を一切反映しない信じられない仕様。
  */
 function codeCommitPullRequestTitle() {
-  const prTitle = document.querySelector('[class^="awsui_title"] h1')?.innerText;
+  const titleElement = document.querySelector('[class^="awsui_title"] h1');
+  const prTitle = titleElement instanceof HTMLElement ? titleElement.innerText : undefined;
   if (typeof prTitle !== "string") {
     return undefined;
   }
@@ -411,9 +435,9 @@ function codeCommitPullRequestTitle() {
  */
 function backlogTitle() {
   // 課題のキー。プロジェクトタイトルがプレフィックスに付くので純粋な数値ではない。
-  const issueNumber = document.getElementsByClassName("ticket__key-number")?.[0]?.innerText;
+  const issueNumber = firstInnerTextByClassName("ticket__key-number");
   // 課題に設定されたタイトル。
-  const issueTitle = document.getElementsByClassName("title-group__title-text")?.[0]?.innerText;
+  const issueTitle = firstInnerTextByClassName("title-group__title-text");
   // うまいこと取得できなかったら諦める。
   if (typeof issueNumber !== "string" || typeof issueTitle !== "string") {
     return undefined;
@@ -441,25 +465,27 @@ function dwimTitle() {
 mapkey("f", "#7Copy title and link to markdown without hash", () => {
   const url = new URL(window.location.href);
   url.hash = "";
-  Clipboard.write(`[${dwimTitle()}](${url.href})`);
+  api.Clipboard.write(`[${dwimTitle()}](${url.href})`);
 });
 
 mapkey("F", "#7Copy title and link to markdown", () => {
-  Clipboard.write(`[${dwimTitle()}](${window.location.href})`);
+  api.Clipboard.write(`[${dwimTitle()}](${window.location.href})`);
 });
 
 mapkey("l", "#7Copy title and link to human readable without hash", () => {
   const url = new URL(window.location.href);
   url.hash = "";
-  Clipboard.write(`[${dwimTitle().trim()}]: ${url.href}`);
+  api.Clipboard.write(`[${dwimTitle().trim()}]: ${url.href}`);
 });
 
 mapkey("L", "#7Copy title and link to human readable", () => {
-  Clipboard.write(`[${dwimTitle().trim()}]: ${window.location.href}`);
+  api.Clipboard.write(`[${dwimTitle().trim()}]: ${window.location.href}`);
 });
 
 /**
  * Twitterの埋め込みスクリプトをボタンを押さずに取得します。
+ * @param {URL} url
+ * @returns {Promise<string | undefined>}
  */
 async function getTwitterEmbed(url) {
   // TwitterのURLやツイートのURLじゃない場合は`undefined`を返します。
@@ -490,7 +516,10 @@ async function getTwitterEmbed(url) {
 // キーを入力するだけでコピーできるようにする。
 mapkey("ye", "#7Copy Twitter embed", () => {
   async function f() {
-    Clipboard.write(await getTwitterEmbed(new URL(window.location.href)));
+    const embed = await getTwitterEmbed(new URL(window.location.href));
+    if (embed != null) {
+      api.Clipboard.write(embed);
+    }
   }
   f();
 });

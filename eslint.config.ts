@@ -7,6 +7,7 @@ import eslintConfigPrettier from "eslint-config-prettier";
 import { createTypeScriptImportResolver } from "eslint-import-resolver-typescript";
 import { flatConfigs as importPluginConfig } from "eslint-plugin-import-x";
 import { configs as nodePluginConfigs } from "eslint-plugin-n";
+import globals from "globals";
 import { default as tseslint } from "typescript-eslint";
 
 /** ES Modulesだと使用できない変数のエミュレート。 */
@@ -117,6 +118,24 @@ const config: ReturnType<typeof defineConfig> = defineConfig(
       // Node.js固有のグローバルはimportを強制して依存を明示します。
       "n/prefer-global/buffer": ["error", "never"],
       "n/prefer-global/process": ["error", "never"],
+    },
+  },
+  {
+    // Surfingkeysが読み込むブラウザ側スクリプト向けの設定。
+    // ブラウザとWebExtensionsのグローバルおよびSurfingkeys独自のグローバルを許可します。
+    // Node.js向けの設定より後に置いて上書きします。
+    files: ["setting.js"],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.webextensions,
+        api: "readonly",
+        settings: "readonly",
+      },
+    },
+    rules: {
+      // Surfingkeysはブラウザで実行されるためNode.js非対応の警告は不要です。
+      "n/no-unsupported-features/node-builtins": "off",
     },
   },
 );
