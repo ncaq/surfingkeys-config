@@ -493,6 +493,23 @@ mapkey("L", "#7Copy title and link to human readable", () => {
 });
 
 /**
+ * oembedのレスポンスの型かどうかを判定します。
+ * @param {unknown} value
+ * @returns {value is { html: string }}
+ */
+function isOembed(value) {
+  if (
+    value == null ||
+    typeof value !== "object" ||
+    !("html" in value) ||
+    typeof value.html !== "string"
+  ) {
+    return false;
+  }
+  return true;
+}
+
+/**
  * Twitterの埋め込みスクリプトをボタンを押さずに取得します。
  * @param {URL} url
  * @returns {Promise<string | undefined>}
@@ -521,12 +538,7 @@ async function getTwitterEmbed(url) {
   }
   /** @type {unknown} */
   const oembed = await response.json();
-  if (
-    oembed == null ||
-    typeof oembed !== "object" ||
-    !("html" in oembed) ||
-    typeof oembed.html !== "string"
-  ) {
+  if (!isOembed(oembed)) {
     throw new Error(`${publish.href}: response shape is unexpected`);
   }
   return oembed.html;
