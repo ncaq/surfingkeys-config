@@ -165,7 +165,7 @@ mapkey("r", "#3Focus parent tab", async () => {
   const tabs = await getTreeTabs("*");
   const parentTab = tabs.find((tab) => tab.children.some((child) => child.id === id));
   if (parentTab) {
-    browser.runtime.sendMessage(tstId, {
+    void browser.runtime.sendMessage(tstId, {
       type: "focus",
       tab: parentTab.id,
     });
@@ -174,7 +174,7 @@ mapkey("r", "#3Focus parent tab", async () => {
 
 // タブを1段階上昇させる。
 mapkey("g", "#3Outdent parent tab", () => {
-  browser.runtime.sendMessage(tstId, {
+  void browser.runtime.sendMessage(tstId, {
     type: "outdent",
     tab: "current",
   });
@@ -465,9 +465,9 @@ function backlogTitle() {
  */
 function dwimTitle() {
   return (
-    githubCommitInPullRequestTitle() ||
-    codeCommitPullRequestTitle() ||
-    backlogTitle() ||
+    githubCommitInPullRequestTitle() ??
+    codeCommitPullRequestTitle() ??
+    backlogTitle() ??
     document.title
   );
 }
@@ -491,6 +491,23 @@ mapkey("l", "#7Copy title and link to human readable without hash", () => {
 mapkey("L", "#7Copy title and link to human readable", () => {
   api.Clipboard.write(`[${dwimTitle().trim()}]: ${window.location.href}`);
 });
+
+/**
+ * oembedのレスポンスの型かどうかを判定します。
+ * @param {unknown} value
+ * @returns {value is { html: string }}
+ */
+function isOembed(value) {
+  if (
+    value == null ||
+    typeof value !== "object" ||
+    !("html" in value) ||
+    typeof value.html !== "string"
+  ) {
+    return false;
+  }
+  return true;
+}
 
 /**
  * Twitterの埋め込みスクリプトをボタンを押さずに取得します。
@@ -519,7 +536,12 @@ async function getTwitterEmbed(url) {
   if (!response.ok) {
     throw new Error(`${publish.href}: response is not ok ${JSON.stringify(response.statusText)}`);
   }
-  return (await response.json()).html;
+  /** @type {unknown} */
+  const oembed = await response.json();
+  if (!isOembed(oembed)) {
+    throw new Error(`${publish.href}: response shape is unexpected`);
+  }
+  return oembed.html;
 }
 
 // ツイートを埋め込むボタンを押していちいちコピーして`script`タグを取り除くのが面倒なので、
@@ -531,7 +553,7 @@ mapkey("ye", "#7Copy Twitter embed", () => {
       api.Clipboard.write(embed);
     }
   }
-  f();
+  void f();
 });
 
 // zoom
