@@ -165,7 +165,7 @@ mapkey("r", "#3Focus parent tab", async () => {
   const tabs = await getTreeTabs("*");
   const parentTab = tabs.find((tab) => tab.children.some((child) => child.id === id));
   if (parentTab) {
-    browser.runtime.sendMessage(tstId, {
+    void browser.runtime.sendMessage(tstId, {
       type: "focus",
       tab: parentTab.id,
     });
@@ -174,7 +174,7 @@ mapkey("r", "#3Focus parent tab", async () => {
 
 // タブを1段階上昇させる。
 mapkey("g", "#3Outdent parent tab", () => {
-  browser.runtime.sendMessage(tstId, {
+  void browser.runtime.sendMessage(tstId, {
     type: "outdent",
     tab: "current",
   });
@@ -465,9 +465,9 @@ function backlogTitle() {
  */
 function dwimTitle() {
   return (
-    githubCommitInPullRequestTitle() ||
-    codeCommitPullRequestTitle() ||
-    backlogTitle() ||
+    githubCommitInPullRequestTitle() ??
+    codeCommitPullRequestTitle() ??
+    backlogTitle() ??
     document.title
   );
 }
@@ -519,7 +519,17 @@ async function getTwitterEmbed(url) {
   if (!response.ok) {
     throw new Error(`${publish.href}: response is not ok ${JSON.stringify(response.statusText)}`);
   }
-  return (await response.json()).html;
+  /** @type {unknown} */
+  const oembed = await response.json();
+  if (
+    oembed == null ||
+    typeof oembed !== "object" ||
+    !("html" in oembed) ||
+    typeof oembed.html !== "string"
+  ) {
+    throw new Error(`${publish.href}: response shape is unexpected`);
+  }
+  return oembed.html;
 }
 
 // ツイートを埋め込むボタンを押していちいちコピーして`script`タグを取り除くのが面倒なので、
@@ -531,7 +541,7 @@ mapkey("ye", "#7Copy Twitter embed", () => {
       api.Clipboard.write(embed);
     }
   }
-  f();
+  void f();
 });
 
 // zoom

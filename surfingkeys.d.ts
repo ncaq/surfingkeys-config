@@ -27,11 +27,11 @@ declare const api: {
     options?: unknown,
     callback?: (response: { tabs?: { id?: number }[] }) => void,
   ) => void;
-  iunmap(keystroke: string): void;
-  map(newKeystroke: string, oldKeystroke: string): void;
-  mapkey(keys: string, annotation: string, jscode: () => void | Promise<unknown>): void;
-  tabOpenLink(url: string): void;
-  unmap(keystroke: string): void;
+  iunmap(this: void, keystroke: string): void;
+  map(this: void, newKeystroke: string, oldKeystroke: string): void;
+  mapkey(this: void, keys: string, annotation: string, jscode: () => void | Promise<unknown>): void;
+  tabOpenLink(this: void, url: string): void;
+  unmap(this: void, keystroke: string): void;
 };
 
 declare const settings: {
