@@ -62,7 +62,7 @@ const config: ReturnType<typeof defineConfig> = defineConfig(
     files: ["**/*.{ts,tsx,cts,mts}"],
     languageOptions: {
       parserOptions: {
-        project: ["tsconfig.json"],
+        projectService: true,
         tsconfigRootDir: __dirname,
       },
     },
