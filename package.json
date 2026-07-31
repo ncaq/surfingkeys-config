@@ -24,7 +24,7 @@
     "eslint-plugin-n": "18.2.2",
     "globals": "17.8.0",
     "jiti": "2.7.0",
-    "npm-run-all2": "9.0.2",
+    "npm-run-all2": "9.0.3",
     "prettier": "3.9.6",
     "typescript": "6.0.3",
     "typescript-eslint": "8.65.0"
